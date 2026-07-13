@@ -7,24 +7,47 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="desktop">
-    <div class="icon" data-app="notes" title="Notes">
-      <img src="assets/icons/notes.svg" alt="Notes">
-      <div class="label">Notes</div>
-    </div>
-    <div class="icon" data-app="calc" title="Calcolatrice">
-      <img src="assets/icons/calc.svg" alt="Calcolatrice">
-      <div class="label">Calcolatrice</div>
-    </div>
-    <div class="icon" data-app="files" title="File">
-      <img src="assets/icons/folder.svg" alt="File">
-      <div class="label">File</div>
-    </div>
-  </div>
+  <div id="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-title">WebOS</div>
+          <div class="brand-subtitle" data-i18n="topbarSubtitle">Sistema demo</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="system-button" class="system-button" type="button" data-i18n="systemMenuButton">Sistema</button>
+        <div id="system-menu" class="system-menu" aria-hidden="true">
+          <label for="language-select" data-i18n="languageLabel">Lingua del sistema</label>
+          <select id="language-select" aria-label="Lingua del sistema">
+            <option value="it">Italiano</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
+      </div>
+    </header>
 
-  <div id="dock">
-    <div class="dock-item" data-app="notes">Notes</div>
-    <div class="dock-item" data-app="calc">Calc</div>
+    <main id="desktop" aria-label="Desktop">
+      <div class="icon" data-app="notes" data-label-key="notes" data-title-key="notes" title="Notes">
+        <img src="assets/icons/notes.svg" alt="Notes">
+        <div class="label">Notes</div>
+      </div>
+      <div class="icon" data-app="calc" data-label-key="calculator" data-title-key="calculator" title="Calcolatrice">
+        <img src="assets/icons/calc.svg" alt="Calcolatrice">
+        <div class="label">Calculator</div>
+      </div>
+      <div class="icon" data-app="files" data-label-key="files" data-title-key="files" title="File">
+        <img src="assets/icons/folder.svg" alt="File">
+        <div class="label">File</div>
+      </div>
+    </main>
+
+    <div id="dock" aria-label="Dock">
+      <div class="dock-item" data-app="notes" data-label-key="notes">Notes</div>
+      <div class="dock-item" data-app="calc" data-label-key="calculator">Calc</div>
+    </div>
   </div>
 
   <template id="window-template">
@@ -43,3 +66,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
