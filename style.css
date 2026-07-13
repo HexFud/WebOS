@@ -1,0 +1,31 @@
+:root{
+  --bg: linear-gradient(135deg,#2b5876 0%,#4e4376 100%);
+  --win-bg: #fff;
+  --accent: #1e90ff;
+}
+*{box-sizing:border-box}
+html,body,#desktop{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Helvetica,Arial}
+body{background:var(--bg);overflow:hidden}
+#desktop{display:grid;grid-template-columns:repeat(auto-fill,100px);grid-auto-rows:110px;gap:18px;padding:24px}
+.icon{width:100px;text-align:center;color:#fff;cursor:pointer;user-select:none}
+.icon img{width:64px;height:64px;display:block;margin:0 auto 6px}
+.label{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+#dock{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:rgba(0,0,0,0.25);padding:6px 10px;border-radius:12px;display:flex;gap:8px}
+.dock-item{color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer}
+.dock-item:hover{background:rgba(255,255,255,0.08)}
+
+.window{position:fixed;width:420px;height:320px;background:var(--win-bg);box-shadow:0 10px 30px rgba(0,0,0,0.4);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.titlebar{background:#f2f4f7;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;cursor:grab}
+.title{font-weight:600}
+.controls button{background:transparent;border:0;padding:6px;margin-left:6px;cursor:pointer}
+.content{flex:1;padding:12px;overflow:auto}
+
+.window.minimized{display:none}
+
+/* small app styling */
+.notes-textarea{width:100%;height:100%;resize:none;border:1px solid #ddd;padding:8px;font-size:14px}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.calc-btn{padding:12px;font-size:18px;border-radius:6px;border:1px solid #ddd;cursor:pointer;background:#f8f9fb}
+
+@media (max-width:480px){.window{width:320px;height:260px}}
