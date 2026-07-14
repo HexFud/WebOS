@@ -1,60 +1,46 @@
-# WebOS
+Hey everyone! This is my first attempt at building a full-blown desktop environment inside a browser. I've always been fascinated by how operating systems manage windows and state, so I decided to build a "simulated" OS using **React** and **Vite**.
 
-A desktop operating system, simulated entirely in the browser — boot screen, account setup, a window manager with draggable/resizable windows, a taskbar, and a handful of built-in apps. No backend, no build step: just React and plain JS/CSS.
+I'm super excited to share this as my first upload to **HackClub**! 
 
-> My first web OS, built for HackClub! 🚀
+## What's inside?
 
-## ✨ Features
+I tried to pack in as many features as possible:
+*   **Window Manager:** You can drag, minimize, maximize, and stack windows. It uses a custom Z-index management system.
+*   **Terminal:** Type `help` to see what it can do. It’s got some basic commands like `ls`, `whoami`, and even a theme switcher.
+*   **Apps:** A text editor (Notes), a working Calculator, a File Explorer, and a "simulated" Browser.
+*   **Persistence:** It uses `localStorage` for your account setup, so it remembers you when you come back.
+*   **Eye Candy:** A fresh UI, dynamic wallpapers, and a light/dark mode.
 
-**Boot & accounts**
-- Animated boot sequence on load
-- First visit → guided setup screen to choose a display name and password
-- Returning visits → password-protected login screen (checked against the account you created)
-- Wrong-password / invalid-setup feedback with an inline error and a shake animation
-- "Log out & reset account" from Settings to start over
+## What i have used
 
-**Desktop**
-- Draggable desktop icons and a right-click context menu
-- 4 built-in wallpapers, dark/light theme toggle
-- Toast notifications
+I wanted to keep this as "vanilla" as possible in terms of logic:
+- **React 18:** All the state (windows, files, auth) is handled by one giant `useReducer`. It was a great way to learn complex state management.
+- **CSS:** No UI libraries here. Everything is custom CSS (lots of `backdrop-filter` and CSS variables).
+- **Vite:** Because life is too short for slow build times.
 
-**Window manager**
-- Drag, resize, minimize, maximize/restore — each with its own animation
-- Edge snapping when dragging windows to the sides of the screen
-- `Alt` + `Tab` to cycle open windows, `Esc` to close menus/the active window
+## 🚀 Getting Started
 
-**Built-in apps**
-| App | Description |
-|---|---|
-| 🗂️ File Explorer | Browse a simulated file/folder structure |
-| 📝 Text Editor | A simple notes app |
-| 🌐 Browser | A simulated browser with a few static pages |
-| ⚙️ Settings | Theme, wallpaper, account info, log out |
-| 🧮 Calculator | A working calculator |
-| 💻 Terminal | `help`, `ls`, `clear`, `date`, `whoami`, `pwd`, `echo`, `open`, `theme`, `wallpaper`, `calc` |
+If you want to run this locally and mess around with the code:
 
-## 🛠️ Tech stack
+1.  **Clone it:**
+    ```bash
+    git clone https://github.com/your-username/webos.git
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Launch the dev server:**
+    ```bash
+    npm run dev
+    ```
+4.  Open `http://localhost:5173` and start hacking!
 
-- [React 18](https://react.dev/) loaded straight from a CDN (UMD build) — no bundler, no JSX, no build step
-- Plain JavaScript (`React.createElement` via a small `h()` helper) and plain CSS
-- A single `index.html` entry point
+## Please note
 
-## 🚀 Getting started
+*   **In-Memory Only:** The "files" you create only live in the React state for now. If you refresh, the filesystem resets (except for your account). 
+*   **Responsive-ish:** It works best on desktop, mobile devices probably will be supported in the future.
 
-Dowload the repo or paste `https://hexfud.github.io/WebOS/` into the browser
+## P.S
 
-## 📁 Project structure
-
-```
-.
-├── index.html    # entry point, loads React + app.js
-├── app.js        # the entire app: state, reducer, components
-├── style.css     # all styling and animations
-├── README.md
-└── .gitignore
-```
-
-## 🔒 Data & privacy
-
-- Your account (display name + password) is saved with `localStorage`, on your device only — nothing is sent anywhere.
-- Everything else (open windows, notes, terminal history, filesystem changes) lives only in memory and resets on reload.
+I'm still learning, so if you find a bug or have an idea on how to make the window dragging smoother, please open an issue or reach out! 
