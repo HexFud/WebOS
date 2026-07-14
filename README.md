@@ -18,23 +18,17 @@ I wanted to keep this as "vanilla" as possible in terms of logic:
 - **CSS:** No UI libraries here. Everything is custom CSS (lots of `backdrop-filter` and CSS variables).
 - **Vite:** Because life is too short for slow build times.
 
-## 🚀 Getting Started
+## Getting Started
 
 If you want to run this locally and mess around with the code:
 
 1.  **Clone it:**
     ```bash
-    git clone https://github.com/your-username/webos.git
+    git clone https://github.com/HexFud/WebOS.git
     ```
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-3.  **Launch the dev server:**
-    ```bash
-    npm run dev
-    ```
-4.  Open `http://localhost:5173` and start hacking!
+2. Execute the ```index.html``` file
+
+If you want to run this in the browser just copy this URL https://hexfud.github.io/WebOS/
 
 ## Please note
 
