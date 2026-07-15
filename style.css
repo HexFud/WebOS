@@ -10,116 +10,15 @@
   --muted: rgba(219, 229, 247, 0.72);
   --muted-strong: rgba(219, 229, 247, 0.52);
   --accent: #85d8ff;
+  --accent-2: #b79cff;
   --shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
   --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.22);
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
   --wallpaper-accent: #85d8ff;
 }
-
-[data-theme="light"] {
-  --bg: #f0f5fb;
-  --bg-soft: rgba(248, 250, 255, 0.76);
-  --glass: rgba(255, 255, 255, 0.62);
-  --glass-strong: rgba(255, 255, 255, 0.76);
-  --glass-stronger: rgba(255, 255, 255, 0.9);
-  --stroke: rgba(13, 31, 57, 0.12);
-  --stroke-strong: rgba(13, 31, 57, 0.18);
-  --text: rgba(17, 24, 39, 0.98);
-  --muted: rgba(49, 67, 91, 0.74);
-  --muted-strong: rgba(49, 67, 91, 0.54);
-  --shadow: 0 26px 70px rgba(14, 21, 36, 0.16);
-}
-
-[data-theme="hacker"] {
-  --bg: #000500;
-  --bg-soft: rgba(0, 15, 0, 0.8);
-  --glass: rgba(0, 20, 0, 0.9);
-  --glass-strong: rgba(0, 25, 0, 0.95);
-  --glass-stronger: #001100;
-  --stroke: #00ff00;
-  --stroke-strong: #00ff00;
-  --text: #00ff00;
-  --muted: #00aa00;
-  --muted-strong: #005500;
-  --accent: #00ff00;
-  --shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-  font-family: "Courier New", Courier, monospace !important;
-}
-
-* { box-sizing: border-box; }
-html, body, #root { width: 100%; height: 100%; margin: 0; }
-body { overflow: hidden; color: var(--text); background: var(--bg); font-family: "Inter", system-ui, sans-serif; transition: 0.3s; }
-button, input, textarea { font: inherit; color: inherit; }
-button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); }
-
-.shell { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bg); }
-.wallpaper-backdrop { position: absolute; inset: 0; background-size: cover; background-position: center; transition: 0.4s; }
-.desktop { position: absolute; inset: 0; padding: 18px 18px 118px; }
-
-.desktop-icons { position: relative; width: 100%; height: 100%; }
-.desktop-icon { position: absolute; width: 92px; padding: 12px 10px; border-radius: 20px; background: transparent; display: grid; place-items: center; gap: 8px; cursor: grab; user-select: none; color: white; text-shadow: 0 1px 3px black;}
-.desktop-icon:hover { transform: translateY(-4px); background: rgba(255, 255, 255, 0.1); }
-.desktop-icon-visual { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 22px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
-.app-icon-svg { width: 28px; height: 28px; color: currentColor; }
-.desktop-icon-label { font-size: 12.5px; text-align: center; }
-
-/* TASKBAR */
-.taskbar { position: absolute; left: 16px; right: 16px; bottom: 14px; height: 74px; border-radius: 24px; background: var(--glass-strong); border: 1px solid var(--stroke); display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; z-index: 25; backdrop-filter: blur(20px); }
-.taskbar-left, .taskbar-right { display: flex; align-items: center; gap: 10px; }
-.taskbar-launcher, .taskbar-app { width: 46px; height: 46px; border-radius: 16px; display: grid; place-items: center; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.05); border: 1px solid transparent; }
-.taskbar-launcher:hover, .taskbar-app:hover { background: rgba(255,255,255,0.15); transform: translateY(-4px); }
-.taskbar-clock { text-align: right; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
-.taskbar-clock:hover { background: rgba(255,255,255,0.1); }
-.taskbar-time { font-size: 15px; font-weight: bold; }
-.taskbar-date { font-size: 11px; color: var(--muted); }
-
-/* WINDOWS */
-.window-layer { position: absolute; inset: 0; z-index: 12; pointer-events: none;}
-.window { position: absolute; display: flex; flex-direction: column; border-radius: 20px; background: var(--glass-stronger); border: 1px solid var(--stroke-strong); box-shadow: var(--shadow); backdrop-filter: blur(20px); pointer-events: auto; transition: opacity 0.2s, transform 0.2s; }
-.window--active { box-shadow: 0 0 0 1px var(--accent) inset, var(--shadow); z-index: 100 !important; }
-.window-titlebar { height: 48px; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--stroke); cursor: grab; }
-.window-title-group { display: flex; gap: 8px; align-items: center; font-weight: bold; }
-.window-controls { display: flex; gap: 8px; }
-.window-control { width: 30px; height: 30px; border-radius: 50%; border: none; display: grid; place-items: center; cursor: pointer; background: rgba(255,255,255,0.1); color: var(--text); }
-.window-control:hover { background: rgba(255,255,255,0.2); }
-.window-control--close:hover { background: #ff4d4d; color: white;}
-.window-body { flex: 1; padding: 16px; overflow: auto; display: flex; flex-direction: column; }
-
-/* MENUS & CALENDAR */
-.start-menu, .calendar-widget, .context-menu { position: absolute; background: var(--glass-stronger); border: 1px solid var(--stroke-strong); backdrop-filter: blur(25px); border-radius: 20px; z-index: 30; box-shadow: var(--shadow); padding: 16px; }
-.start-menu { left: 16px; bottom: 96px; width: 320px; }
-.calendar-widget { right: 16px; bottom: 96px; width: 260px; text-align: center; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
-.cal-day { padding: 6px; border-radius: 8px; font-size: 12px; }
-.cal-day.today { background: var(--accent); color: #000; font-weight: bold; }
-
-/* NEW APP: TRIS (TIC TAC TOE) */
-.game-app { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 20px;}
-.game-board { display: grid; grid-template-columns: repeat(3, 80px); gap: 10px; }
-.game-cell { width: 80px; height: 80px; font-size: 36px; font-weight: bold; background: rgba(255,255,255,0.05); border: 1px solid var(--stroke); border-radius: 12px; cursor: pointer; transition: 0.2s;}
-.game-cell:hover { background: rgba(255,255,255,0.15); }
-.game-status { font-size: 20px; font-weight: bold; }
-.game-reset { padding: 8px 16px; border-radius: 8px; background: var(--accent); color: #000; border: none; cursor: pointer; font-weight: bold; }
-
-/* NEW APP: GALLERY */
-.gallery-app { display: flex; flex-direction: column; height: 100%; gap: 16px; }
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; overflow-y: auto; }
-.gallery-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-.gallery-thumb:hover { transform: scale(1.05); }
-.gallery-main-view { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.gallery-main-img { max-width: 100%; max-height: 300px; border-radius: 16px; object-fit: contain; box-shadow: var(--shadow); }
-
-/* APP GENERALS */
-.notes-editor { flex: 1; background: transparent; color: var(--text); border: 1px solid var(--stroke); border-radius: 12px; padding: 12px; resize: none; }
-.settings-toggle { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--stroke); background: transparent; cursor: pointer; margin-right: 8px; color: var(--text); }
-.settings-toggle--active { background: var(--accent); color: #000; border-color: var(--accent); }
-.terminal-output { flex: 1; background: rgba(0,0,0,0.5); padding: 12px; border-radius: 12px; font-family: monospace; overflow-y: auto; color: var(--text); }
-.terminal-input-row { display: flex; gap: 8px; margin-top: 8px; }
-.terminal-input { flex: 1; background: transparent; border: none; color: var(--text); font-family: monospace; outline: none; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--stroke-strong); border-radius: 4px; }
 
 [data-theme="light"] {
   --bg: #f0f5fb;
@@ -233,7 +132,8 @@ textarea:focus-visible {
   transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 320ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.shell--login .desktop {
+.shell--login .desktop,
+.shell--setup .desktop {
   transform: scale(0.985);
   filter: blur(3px) brightness(0.72) saturate(0.92);
   opacity: 0.92;
@@ -407,10 +307,12 @@ textarea:focus-visible {
   position: absolute;
   inset: 0;
   z-index: 12;
+  pointer-events: none;
 }
 
 .window {
   position: absolute;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   border-radius: 26px;
@@ -441,6 +343,85 @@ textarea:focus-visible {
 
 .window--maximized {
   border-radius: 20px;
+}
+
+.window-resize-handle {
+  position: absolute;
+  z-index: 5;
+  transition: background 120ms ease;
+}
+
+.window-resize-handle:hover,
+.window-resize-handle:active {
+  background: rgba(130, 216, 255, 0.16);
+}
+
+.window-resize-handle--n {
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 10px;
+  cursor: ns-resize;
+}
+
+.window-resize-handle--s {
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 10px;
+  cursor: ns-resize;
+}
+
+.window-resize-handle--e {
+  top: 16px;
+  right: 0;
+  bottom: 16px;
+  width: 10px;
+  cursor: ew-resize;
+}
+
+.window-resize-handle--w {
+  top: 16px;
+  left: 0;
+  bottom: 16px;
+  width: 10px;
+  cursor: ew-resize;
+}
+
+.window-resize-handle--ne {
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nesw-resize;
+  border-top-right-radius: 26px;
+}
+
+.window-resize-handle--nw {
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nwse-resize;
+  border-top-left-radius: 26px;
+}
+
+.window-resize-handle--se {
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nwse-resize;
+  border-bottom-right-radius: 26px;
+}
+
+.window-resize-handle--sw {
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nesw-resize;
+  border-bottom-left-radius: 26px;
 }
 
 .window-titlebar {
@@ -1151,6 +1132,23 @@ textarea:focus-visible {
   margin-bottom: 14px;
 }
 
+.login-input--error {
+  border-color: rgba(255, 121, 121, 0.55);
+  background: rgba(255, 121, 121, 0.08);
+}
+
+.auth-error {
+  margin: -4px 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 121, 121, 0.12);
+  border: 1px solid rgba(255, 121, 121, 0.3);
+  color: #ff9f9f;
+  font-size: 13px;
+  line-height: 1.4;
+  animation: panel-appear 200ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
 .login-button {
   width: 100%;
   border: 0;
@@ -1177,6 +1175,10 @@ textarea:focus-visible {
 
 .login-screen--unlocking {
   animation: login-fade 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.login-card--shake {
+  animation: auth-shake 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .start-menu,
@@ -1401,6 +1403,13 @@ textarea:focus-visible {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes auth-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-5px); }
+  40%, 60% { transform: translateX(5px); }
 }
 
 @media (max-width: 980px) {

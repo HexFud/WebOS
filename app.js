@@ -213,23 +213,6 @@
     };
   }
 
-  function snapWindow(bounds) {
-    const workspace = getWorkspaceBounds();
-    const snap = 28;
-    const leftEdge = bounds.x <= workspace.left + snap;
-    const rightEdge = bounds.x + bounds.width >= workspace.left + workspace.width - snap;
-    const topEdge = bounds.y <= workspace.top + snap;
-    const halfW = Math.round(workspace.width / 2);
-    const halfH = Math.round(workspace.height / 2);
-
-    if (topEdge && leftEdge) return { x: workspace.left, y: workspace.top, width: halfW, height: halfH };
-    if (topEdge && rightEdge) return { x: workspace.left + halfW, y: workspace.top, width: halfW, height: halfH };
-    if (leftEdge) return { x: workspace.left, y: workspace.top, width: halfW, height: workspace.height };
-    if (rightEdge) return { x: workspace.left + halfW, y: workspace.top, width: halfW, height: workspace.height };
-    if (topEdge) return { x: workspace.left, y: workspace.top, width: workspace.width, height: halfH };
-    return bounds;
-  }
-
   function normalizeDesktop(children) {
     return children.map((item, index) => ({ ...item, ...gridPosition(index) }));
   }
@@ -650,8 +633,11 @@
     const originW = windowItem.width;
     const originH = windowItem.height;
     interactingRef.current = true;
+    const pointerId = event.pointerId;
+    try { event.currentTarget.setPointerCapture(pointerId); } catch { /* ignore unsupported targets */ }
 
     const move = (moveEvent) => {
+      if (moveEvent.pointerId !== undefined && moveEvent.pointerId !== pointerId) return;
       const nextX = originX + (moveEvent.clientX - startX);
       const nextY = originY + (moveEvent.clientY - startY);
       liveRef.current = { x: nextX, y: nextY, width: originW, height: originH };
@@ -662,17 +648,19 @@
       }
     };
 
-    const up = (upEvent) => {
+    const finish = (endEvent) => {
       window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-      const finalBounds = snapWindow({ x: originX + (upEvent.clientX - startX), y: originY + (upEvent.clientY - startY), width: originW, height: originH });
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+      const finalBounds = { x: originX + (endEvent.clientX - startX), y: originY + (endEvent.clientY - startY), width: originW, height: originH };
       liveRef.current = finalBounds;
       interactingRef.current = false;
       dispatch({ type: 'MOVE_WINDOW', id: windowItem.id, bounds: finalBounds });
     };
 
     window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
   }
 
   function startWindowResize(event, edge, windowItem, dispatch, frameRef, liveRef, interactingRef) {
@@ -692,6 +680,8 @@
     const grabsTop = edge.includes('n');
     const grabsBottom = edge.includes('s');
     interactingRef.current = true;
+    const pointerId = event.pointerId;
+    try { event.currentTarget.setPointerCapture(pointerId); } catch { /* ignore unsupported targets */ }
 
     const computeBounds = (clientX, clientY) => {
       let width = originW;
@@ -717,6 +707,7 @@
     };
 
     const move = (moveEvent) => {
+      if (moveEvent.pointerId !== undefined && moveEvent.pointerId !== pointerId) return;
       const bounds = computeBounds(moveEvent.clientX, moveEvent.clientY);
       liveRef.current = bounds;
       const el = frameRef.current;
@@ -728,17 +719,19 @@
       }
     };
 
-    const up = (upEvent) => {
+    const finish = (endEvent) => {
       window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-      const bounds = computeBounds(upEvent.clientX, upEvent.clientY);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+      const bounds = computeBounds(endEvent.clientX, endEvent.clientY);
       liveRef.current = bounds;
       interactingRef.current = false;
       dispatch({ type: 'MOVE_WINDOW', id: windowItem.id, bounds });
     };
 
     window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
   }
 
   function renderApp(windowItem, state, dispatch, openApp, showToast, openDesktopItem) {
