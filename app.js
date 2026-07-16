@@ -119,7 +119,9 @@
     authShake: false,
     theme: 'dark',
     wallpaper: 'aurora',
-    startMenuOpen: false,
+    spotlightOpen: false,
+    notificationCenterOpen: false,
+    notifications: [],
     contextMenu: null,
     selectedDesktopItemId: null,
     activeWindowId: null,
@@ -288,14 +290,19 @@
           authShake: false,
           windows: [],
           activeWindowId: null,
-          startMenuOpen: false,
+          spotlightOpen: false,
+          notificationCenterOpen: false,
           contextMenu: null
         };
       case 'SET_THEME': return { ...state, theme: action.value };
       case 'SET_WALLPAPER': return { ...state, wallpaper: action.value };
-      case 'TOGGLE_START_MENU': return { ...state, startMenuOpen: !state.startMenuOpen, contextMenu: null };
-      case 'CLOSE_START_MENU': return { ...state, startMenuOpen: false };
-      case 'OPEN_CONTEXT_MENU': return { ...state, contextMenu: action.value, startMenuOpen: false, selectedDesktopItemId: null };
+      case 'OPEN_SPOTLIGHT': return { ...state, spotlightOpen: true, notificationCenterOpen: false, contextMenu: null };
+      case 'CLOSE_SPOTLIGHT': return { ...state, spotlightOpen: false };
+      case 'TOGGLE_NOTIFICATION_CENTER': return { ...state, notificationCenterOpen: !state.notificationCenterOpen, spotlightOpen: false, contextMenu: null };
+      case 'CLOSE_NOTIFICATION_CENTER': return { ...state, notificationCenterOpen: false };
+      case 'CLEAR_NOTIFICATIONS': return { ...state, notifications: [] };
+      case 'CLOSE_OVERLAYS': return { ...state, spotlightOpen: false, notificationCenterOpen: false, contextMenu: null };
+      case 'OPEN_CONTEXT_MENU': return { ...state, contextMenu: action.value, spotlightOpen: false, notificationCenterOpen: false, selectedDesktopItemId: null };
       case 'CLOSE_CONTEXT_MENU': return { ...state, contextMenu: null };
       case 'SELECT_DESKTOP_ITEM': return { ...state, selectedDesktopItemId: action.value };
       case 'SORT_DESKTOP_ICONS': {
@@ -309,7 +316,7 @@
         return { ...state, filesystem: { ...state.filesystem, children } };
       }
       case 'UPDATE_FILESYSTEM': return { ...state, filesystem: action.value };
-      case 'SHOW_TOAST': return { ...state, toasts: [...state.toasts, action.toast] };
+      case 'SHOW_TOAST': return { ...state, toasts: [...state.toasts, action.toast], notifications: [{ ...action.toast, time: new Date().toISOString() }, ...state.notifications].slice(0, 30) };
       case 'DISMISS_TOAST': return { ...state, toasts: state.toasts.filter((toast) => toast.id !== action.id) };
       case 'OPEN_WINDOW': {
         const z = state.windowZ + 1;
@@ -330,7 +337,7 @@
           z,
           payload: initialPayload(action.appKey, state, action.payload || {})
         };
-        return { ...state, windows: [...state.windows, record], windowZ: z, activeWindowId: id, startMenuOpen: false, contextMenu: null };
+        return { ...state, windows: [...state.windows, record], windowZ: z, activeWindowId: id, spotlightOpen: false, notificationCenterOpen: false, contextMenu: null };
       }
       case 'FOCUS_WINDOW': {
         const z = state.windowZ + 1;
@@ -345,7 +352,7 @@
         return { ...state, activeWindowId: state.activeWindowId === action.id ? null : state.activeWindowId, windows: state.windows.map((window) => window.id === action.id ? { ...window, minimized: true } : window) };
       case 'RESTORE_WINDOW': {
         const z = state.windowZ + 1;
-        return { ...state, windowZ: z, activeWindowId: action.id, windows: state.windows.map((window) => window.id === action.id ? { ...window, minimized: false, maximized: false, z } : window) };
+        return { ...state, windowZ: z, activeWindowId: action.id, windows: state.windows.map((window) => window.id === action.id ? { ...window, minimized: false, z } : window) };
       }
       case 'TOGGLE_MAXIMIZE_WINDOW': {
         const workspace = getWorkspaceBounds();
@@ -394,6 +401,10 @@
       case 'minus': return h('svg', { viewBox: '0 0 24 24', className: 'control-svg', 'aria-hidden': 'true' }, h('path', { d: 'M6 12h12', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round' }));
       case 'maximize': return h('svg', { viewBox: '0 0 24 24', className: 'control-svg', 'aria-hidden': 'true' }, h('path', { d: 'M6.5 6.5h11v11h-11Z', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }));
       case 'restore': return h('svg', { viewBox: '0 0 24 24', className: 'control-svg', 'aria-hidden': 'true' }, h('path', { d: 'M8.5 7.5h8v8h-8Z', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }), h('path', { d: 'M6.5 10.5V6.5h4', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round' }));
+      case 'logo': return h('svg', { viewBox: '0 0 24 24', className: 'menu-bar-logo-svg', 'aria-hidden': 'true' }, h('circle', { cx: '12', cy: '12', r: '8.4', fill: 'none', stroke: 'currentColor', strokeWidth: '1.7' }), h('path', { d: 'M8.4 10.2c0-2 1.6-3.6 3.6-3.6s3.6 1.6 3.6 3.6-1.6 3.6-3.6 3.6', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }), h('circle', { cx: '12', cy: '16.2', r: '1.1', fill: 'currentColor' }));
+      case 'search': return h('svg', { viewBox: '0 0 24 24', className: 'tray-icon', 'aria-hidden': 'true' }, h('circle', { cx: '10.8', cy: '10.8', r: '6.3', fill: 'none', stroke: 'currentColor', strokeWidth: '1.7' }), h('path', { d: 'M15.6 15.6 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: '1.7', strokeLinecap: 'round' }));
+      case 'launchpad': return h('svg', { viewBox: '0 0 24 24', className: 'app-icon-svg', 'aria-hidden': 'true' }, [[5.2, 5.2], [12, 5.2], [18.8, 5.2], [5.2, 12], [12, 12], [18.8, 12], [5.2, 18.8], [12, 18.8], [18.8, 18.8]].map(([cx, cy], index) => h('circle', { key: index, cx, cy, r: '1.9', fill: 'currentColor' })));
+      case 'trash': return h('svg', { viewBox: '0 0 24 24', className: 'tray-icon', 'aria-hidden': 'true' }, h('path', { d: 'M5.5 7.5h13M9.5 7.5V5.8a1.3 1.3 0 0 1 1.3-1.3h2.4a1.3 1.3 0 0 1 1.3 1.3v1.7M7.3 7.5l.8 11.3a1.5 1.5 0 0 0 1.5 1.4h4.8a1.5 1.5 0 0 0 1.5-1.4l.8-11.3', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round' }));
       default: return h('svg', { viewBox: '0 0 24 24', className: 'app-icon-svg', 'aria-hidden': 'true' }, h('circle', { cx: '12', cy: '12', r: '8', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6' }));
     }
   }
@@ -499,20 +510,82 @@
     );
   }
 
-  function StartMenu({ userName, openApp, onClose }) {
-    const items = [
-      { appKey: 'explorer', label: 'File Explorer', desc: 'Navigate folders and files' },
-      { appKey: 'notes', label: 'Text Editor', desc: 'Write and edit notes' },
-      { appKey: 'browser', label: 'Browser', desc: 'Open simulated pages' },
-      { appKey: 'settings', label: 'Settings', desc: 'Theme, wallpaper and system info' },
-      { appKey: 'calc', label: 'Calculator', desc: 'Perform calculations' },
-      { appKey: 'terminal', label: 'Terminal', desc: 'Run built-in shell commands' }
-    ];
+  function MenuBar({ state, activeAppTitle, dispatch }) {
+    return h('header', { className: 'menu-bar' },
+      h('div', { className: 'menu-bar-left' },
+        h('div', { className: 'menu-bar-logo' }, h(Icon, { icon: 'logo' })),
+        h('div', { className: 'menu-bar-app-name' }, activeAppTitle)
+      ),
+      h('div', { className: 'menu-bar-right' },
+        h('button', { type: 'button', className: 'menu-bar-icon-button', onClick: () => dispatch({ type: 'OPEN_SPOTLIGHT' }), title: 'Search (Ctrl+K)', 'aria-label': 'Search' }, h(Icon, { icon: 'search' })),
+        h('div', { className: 'menu-bar-tray' }, h(Icon, { icon: 'wifi' }), h(Icon, { icon: 'volume' }), h(Icon, { icon: 'battery' })),
+        h('button', { type: 'button', className: `menu-bar-clock ${state.notificationCenterOpen ? 'menu-bar-clock--active' : ''}`, onClick: () => dispatch({ type: 'TOGGLE_NOTIFICATION_CENTER' }) },
+          h('span', { className: 'menu-bar-time' }, formatTime(state.clock)),
+          h('span', { className: 'menu-bar-date' }, formatDate(state.clock))
+        )
+      )
+    );
+  }
 
-    return h('div', { className: 'start-menu', onPointerDown: (event) => event.stopPropagation() },
-      h('div', { className: 'start-menu-profile' }, h('div', { className: 'start-menu-avatar' }, initials(userName)), h('div', null, h('div', { className: 'start-menu-name' }, userName), h('div', { className: 'start-menu-subtitle' }, 'WebOS session is running in memory'))),
-      h('div', { className: 'start-menu-list' }, items.map((item) => h('button', { className: 'start-menu-item', type: 'button', key: item.appKey, onClick: () => { openApp(item.appKey); onClose(); } }, h('span', { className: 'start-menu-item-icon' }, h(Icon, { icon: APPS[item.appKey].icon })), h('span', null, h('span', { className: 'start-menu-item-title' }, item.label), h('span', { className: 'start-menu-item-desc' }, item.desc))))),
-      h('div', { className: 'start-menu-footer' }, h('button', { className: 'start-menu-footer-button', type: 'button', onClick: () => openApp('settings') }, 'Open Settings'), h('button', { className: 'start-menu-footer-button', type: 'button', onClick: onClose }, 'Close'))
+  function Spotlight({ items, onSelect, onClose }) {
+    const [query, setQuery] = useState('');
+    const [index, setIndex] = useState(0);
+    const inputRef = useRef(null);
+
+    useEffect(() => { inputRef.current?.focus(); }, []);
+
+    const results = query.trim()
+      ? items.filter((item) => item.title.toLowerCase().includes(query.trim().toLowerCase()))
+      : items;
+
+    function handleKeyDown(event) {
+      if (event.key === 'ArrowDown') { event.preventDefault(); setIndex((value) => Math.min(value + 1, Math.max(results.length - 1, 0))); }
+      else if (event.key === 'ArrowUp') { event.preventDefault(); setIndex((value) => Math.max(value - 1, 0)); }
+      else if (event.key === 'Enter') { event.preventDefault(); if (results[index]) onSelect(results[index]); }
+      else if (event.key === 'Escape') { event.preventDefault(); onClose(); }
+    }
+
+    return h('div', { className: 'spotlight-overlay', onPointerDown: onClose },
+      h('div', { className: 'spotlight-panel', onPointerDown: (event) => event.stopPropagation() },
+        h('div', { className: 'spotlight-input-row' },
+          h(Icon, { icon: 'search' }),
+          h('input', {
+            ref: inputRef,
+            className: 'spotlight-input',
+            value: query,
+            placeholder: 'Search apps and files',
+            onChange: (event) => { setQuery(event.target.value); setIndex(0); },
+            onKeyDown: handleKeyDown
+          })
+        ),
+        results.length
+          ? h('div', { className: 'spotlight-results' }, results.map((item, itemIndex) => h('button', {
+              type: 'button',
+              key: item.key,
+              className: `spotlight-result ${itemIndex === index ? 'spotlight-result--active' : ''}`,
+              onMouseEnter: () => setIndex(itemIndex),
+              onClick: () => onSelect(item)
+            }, h('span', { className: 'spotlight-result-icon' }, h(Icon, { icon: item.icon })), h('span', { className: 'spotlight-result-text' }, h('span', { className: 'spotlight-result-title' }, item.title), item.subtitle && h('span', { className: 'spotlight-result-subtitle' }, item.subtitle)))))
+          : h('div', { className: 'spotlight-empty' }, 'No matches')
+      )
+    );
+  }
+
+  function NotificationCenter({ notifications, onClear, onClose }) {
+    return h('div', { className: 'notification-overlay', onPointerDown: onClose },
+      h('div', { className: 'notification-panel', onPointerDown: (event) => event.stopPropagation() },
+        h('div', { className: 'notification-panel-header' },
+          h('div', { className: 'notification-panel-title' }, 'Notification Center'),
+          notifications.length ? h('button', { type: 'button', className: 'notification-clear', onClick: onClear }, h(Icon, { icon: 'trash' }), 'Clear') : null
+        ),
+        notifications.length
+          ? h('div', { className: 'notification-list' }, notifications.map((toast, index) => h('div', { className: `notification-item notification-item--${toast.variant || 'info'}`, key: `${toast.id}-${index}` },
+              h('div', { className: 'notification-item-title' }, toast.title),
+              h('div', { className: 'notification-item-body' }, toast.message),
+              h('div', { className: 'notification-item-time' }, new Date(toast.time).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }))
+            )))
+          : h('div', { className: 'notification-empty' }, 'No notifications yet.')
+      )
     );
   }
 
@@ -561,7 +634,7 @@
         event.preventDefault();
         dispatch({ type: 'OPEN_CONTEXT_MENU', value: { x: clamp(event.clientX, 12, window.innerWidth - 180), y: clamp(event.clientY, 12, window.innerHeight - 340) } });
       },
-      onPointerDown: () => dispatch({ type: 'CLOSE_START_MENU' })
+      onPointerDown: () => dispatch({ type: 'CLOSE_OVERLAYS' })
     },
       h('div', { className: 'desktop-overlay' }),
       h('div', { className: 'desktop-icons' }, desktopItems.map((item) => h(DesktopIcon, {
@@ -603,12 +676,12 @@
 
     return h('section', { ref: frameRef, className: ['window', state.activeWindowId === windowItem.id ? 'window--active' : '', windowItem.minimized ? 'window--minimized' : '', windowItem.maximized ? 'window--maximized' : '', windowItem.closing ? 'window--closing' : '', windowItem.origin ? 'window--spawned' : ''].join(' '), style, 'data-window-id': windowItem.id, onMouseDown: () => dispatch({ type: 'FOCUS_WINDOW', id: windowItem.id }) },
       h('div', { className: 'window-titlebar', onPointerDown: (event) => startWindowDrag(event, windowItem, dispatch, frameRef, liveRef, interactingRef), onDoubleClick: () => dispatch({ type: 'TOGGLE_MAXIMIZE_WINDOW', id: windowItem.id }) },
-        h('div', { className: 'window-title-group' }, h('div', { className: 'window-title-icon' }, h(Icon, { icon: APPS[windowItem.appKey]?.icon || 'folder' })), h('div', { className: 'window-title' }, windowItem.title)),
-        h('div', { className: 'window-controls' },
+        h('div', { className: 'window-controls', onPointerDown: (event) => event.stopPropagation() },
+          h('button', { type: 'button', className: 'window-control window-control--close', onClick: () => dispatch({ type: 'START_CLOSE_WINDOW', id: windowItem.id }) }, h(Icon, { icon: 'close' })),
           h('button', { type: 'button', className: 'window-control window-control--minimize', onClick: () => dispatch({ type: 'MINIMIZE_WINDOW', id: windowItem.id }) }, h(Icon, { icon: 'minus' })),
-          h('button', { type: 'button', className: 'window-control window-control--maximize', onClick: () => dispatch({ type: 'TOGGLE_MAXIMIZE_WINDOW', id: windowItem.id }) }, h(Icon, { icon: windowItem.maximized ? 'restore' : 'maximize' })),
-          h('button', { type: 'button', className: 'window-control window-control--close', onClick: () => dispatch({ type: 'START_CLOSE_WINDOW', id: windowItem.id }) }, h(Icon, { icon: 'close' }))
-        )
+          h('button', { type: 'button', className: 'window-control window-control--maximize', onClick: () => dispatch({ type: 'TOGGLE_MAXIMIZE_WINDOW', id: windowItem.id }) }, h(Icon, { icon: windowItem.maximized ? 'restore' : 'maximize' }))
+        ),
+        h('div', { className: 'window-title-group' }, h('div', { className: 'window-title-icon' }, h(Icon, { icon: APPS[windowItem.appKey]?.icon || 'folder' })), h('div', { className: 'window-title' }, windowItem.title))
       ),
       h('div', { className: 'window-body' }, renderApp(windowItem, state, dispatch, openApp, showToast, openDesktopItem)),
       !windowItem.maximized && h(Fragment, null,
@@ -908,16 +981,19 @@
       dispatch({ type: 'RESTORE_WINDOW', id: top.id });
     }
 
-    return h('footer', { className: 'taskbar' },
-      h('div', { className: 'taskbar-left' },
-        h('button', { type: 'button', className: `taskbar-launcher ${state.startMenuOpen ? 'taskbar-launcher--active' : ''}`, onClick: () => dispatch({ type: 'TOGGLE_START_MENU' }) }, h(Icon, { icon: 'start' })),
-        h('div', { className: 'taskbar-apps' }, apps.map((appKey) => {
+    return h('footer', { className: 'dock-wrap' },
+      h('div', { className: 'dock' },
+        h('button', { type: 'button', className: 'dock-app dock-app--launchpad', onClick: () => dispatch({ type: 'OPEN_SPOTLIGHT' }), title: 'Launchpad' }, h(Icon, { icon: 'launchpad' })),
+        h('div', { className: 'dock-divider' }),
+        apps.map((appKey) => {
           const open = state.windows.filter((window) => window.appKey === appKey && !window.closing);
           const active = open.some((window) => window.id === state.activeWindowId && !window.minimized);
-          return h('button', { key: appKey, type: 'button', className: `taskbar-app ${open.length ? 'taskbar-app--open' : ''} ${active ? 'taskbar-app--active' : ''}`, onClick: () => toggleWindow(appKey), title: APPS[appKey].title }, h(Icon, { icon: APPS[appKey].icon }));
-        }))
-      ),
-      h('div', { className: 'taskbar-right' }, h('div', { className: 'taskbar-tray' }, h(Icon, { icon: 'wifi' }), h(Icon, { icon: 'volume' }), h(Icon, { icon: 'battery' })), h('div', { className: 'taskbar-clock' }, h('div', { className: 'taskbar-time' }, formatTime(state.clock)), h('div', { className: 'taskbar-date' }, formatDate(state.clock))))
+          return h('button', { key: appKey, type: 'button', className: `dock-app ${open.length ? 'dock-app--open' : ''} ${active ? 'dock-app--active' : ''}`, onClick: () => toggleWindow(appKey), title: APPS[appKey].title },
+            h(Icon, { icon: APPS[appKey].icon }),
+            open.length ? h('span', { className: 'dock-app-indicator' }) : null
+          );
+        })
+      )
     );
   }
 
@@ -976,6 +1052,10 @@
     useEffect(() => {
       if (state.phase !== 'desktop') return undefined;
       const handleKeyDown = (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          return dispatch({ type: state.spotlightOpen ? 'CLOSE_SPOTLIGHT' : 'OPEN_SPOTLIGHT' });
+        }
         if (event.altKey && event.key.toLowerCase() === 'tab') {
           event.preventDefault();
           const list = state.windows.filter((window) => !window.minimized && !window.closing).sort((a, b) => a.z - b.z);
@@ -984,8 +1064,9 @@
           dispatch({ type: 'FOCUS_WINDOW', id: list[(index + 1) % list.length].id });
         }
         if (event.key === 'Escape') {
+          if (state.spotlightOpen) return dispatch({ type: 'CLOSE_SPOTLIGHT' });
+          if (state.notificationCenterOpen) return dispatch({ type: 'CLOSE_NOTIFICATION_CENTER' });
           if (state.contextMenu) return dispatch({ type: 'CLOSE_CONTEXT_MENU' });
-          if (state.startMenuOpen) return dispatch({ type: 'CLOSE_START_MENU' });
           const visible = state.windows.filter((window) => !window.closing);
           const active = visible.find((window) => window.id === state.activeWindowId) || visible.slice().sort((a, b) => b.z - a.z)[0];
           if (active) dispatch({ type: 'START_CLOSE_WINDOW', id: active.id });
@@ -993,14 +1074,14 @@
       };
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [state.activeWindowId, state.contextMenu, state.phase, state.startMenuOpen, state.windows]);
+    }, [state.activeWindowId, state.contextMenu, state.notificationCenterOpen, state.phase, state.spotlightOpen, state.windows]);
 
     useEffect(() => {
-      if (!state.startMenuOpen && !state.contextMenu) return undefined;
-      const closeMenus = () => { dispatch({ type: 'CLOSE_START_MENU' }); dispatch({ type: 'CLOSE_CONTEXT_MENU' }); };
+      if (!state.notificationCenterOpen && !state.contextMenu) return undefined;
+      const closeMenus = () => { dispatch({ type: 'CLOSE_NOTIFICATION_CENTER' }); dispatch({ type: 'CLOSE_CONTEXT_MENU' }); };
       window.addEventListener('pointerdown', closeMenus, { once: true });
       return () => window.removeEventListener('pointerdown', closeMenus);
-    }, [state.contextMenu, state.startMenuOpen]);
+    }, [state.contextMenu, state.notificationCenterOpen]);
 
     const submitSetup = () => {
       const name = state.setupName.trim();
@@ -1058,6 +1139,25 @@
       }
     };
 
+    const activeWindow = state.windows.find((window) => window.id === state.activeWindowId && !window.minimized && !window.closing);
+    const activeAppTitle = activeWindow ? APPS[activeWindow.appKey]?.title || 'WebOS' : 'Desktop';
+
+    const spotlightItems = state.filesystem.children.map((item) => ({
+      key: item.id,
+      title: item.name,
+      subtitle: item.type === 'shortcut' ? 'App' : item.type === 'folder' ? 'Folder' : 'File',
+      icon: item.icon,
+      item
+    }));
+
+    const launchSpotlightItem = (result) => {
+      const item = result.item;
+      dispatch({ type: 'CLOSE_SPOTLIGHT' });
+      if (item.type === 'shortcut') return openApp(item.appKey);
+      if (item.type === 'folder') return openApp('explorer', { path: ['root', item.id] });
+      if (item.type === 'file') return openApp('notes', { text: item.content || NOTE_TEXT });
+    };
+
     return h('div', { className: `shell shell--${state.theme} shell--${state.phase}${state.unlocking ? ' shell--unlocking' : ''}` },
       h('div', { className: 'wallpaper-backdrop', style: { backgroundImage: WALLPAPERS[state.wallpaper].background } }),
       state.phase !== 'boot' && h(Desktop, { state, dispatch, openApp, showToast }),
@@ -1086,7 +1186,10 @@
         onSubmit: submitLogin,
         onShakeEnd: () => dispatch({ type: 'AUTH_SHAKE_END' })
       }),
-      state.phase === 'desktop' && h(Fragment, null, h(Taskbar, { state, openApp, dispatch }), state.startMenuOpen && h(StartMenu, { userName: state.account?.userName, openApp, onClose: () => dispatch({ type: 'CLOSE_START_MENU' }) }), h(ContextMenu, { menu: state.contextMenu, onAction: onDesktopAction })),
+      state.phase === 'desktop' && h(MenuBar, { state, activeAppTitle, dispatch }),
+      state.phase === 'desktop' && h(Fragment, null, h(Taskbar, { state, openApp, dispatch }), h(ContextMenu, { menu: state.contextMenu, onAction: onDesktopAction })),
+      state.spotlightOpen && h(Spotlight, { items: spotlightItems, onSelect: launchSpotlightItem, onClose: () => dispatch({ type: 'CLOSE_SPOTLIGHT' }) }),
+      state.notificationCenterOpen && h(NotificationCenter, { notifications: state.notifications, onClear: () => dispatch({ type: 'CLEAR_NOTIFICATIONS' }), onClose: () => dispatch({ type: 'CLOSE_NOTIFICATION_CENTER' }) }),
       h(ToastStack, { toasts: state.toasts })
     );
   }
