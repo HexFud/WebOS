@@ -1,0 +1,130 @@
+/* explorer-app.css — File Explorer app: breadcrumbs, list/grid layout, preview pane. */
+
+.explorer-app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 12px;
+  height: 100%;
+}
+
+.explorer-toolbar {
+  flex-wrap: wrap;
+}
+
+.explorer-breadcrumb {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: var(--muted);
+}
+
+.explorer-breadcrumb-item {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+}
+
+.explorer-breadcrumb-separator {
+  color: var(--muted-strong);
+}
+
+.explorer-layout {
+  display: grid;
+  gap: 14px;
+  min-height: 0;
+}
+
+.explorer-layout--grid {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.explorer-layout--list {
+  grid-template-columns: 1fr 0.72fr;
+}
+
+.explorer-list {
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.explorer-item {
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 14px 14px;
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: var(--text);
+  transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1), background 160ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.explorer-item:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.explorer-item--selected {
+  border-color: rgba(133, 216, 255, 0.28);
+  background: rgba(133, 216, 255, 0.12);
+}
+
+.explorer-item-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.explorer-item-name {
+  font-weight: 700;
+}
+
+.explorer-item-meta {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 10px;
+}
+
+.explorer-preview {
+  min-height: 0;
+}
+
+.explorer-preview-card,
+.explorer-preview-empty {
+  height: 100%;
+  padding: 18px;
+}
+
+.explorer-preview-title {
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.explorer-preview-body {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.explorer-preview-empty {
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+

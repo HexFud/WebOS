@@ -1,0 +1,22 @@
+/* Main stylesheet: imports every module. Split by area so each file stays small and focused. */
+
+@import url('./css/base.css');
+@import url('./css/shell.css');
+@import url('./css/desktop.css');
+@import url('./css/menubar.css');
+@import url('./css/control-center.css');
+@import url('./css/taskbar.css');
+@import url('./css/window.css');
+@import url('./css/apps-shared.css');
+@import url('./css/trash-app.css');
+@import url('./css/notes-app.css');
+@import url('./css/browser-app.css');
+@import url('./css/settings-app.css');
+@import url('./css/calculator-app.css');
+@import url('./css/terminal-app.css');
+@import url('./css/explorer-app.css');
+@import url('./css/boot-login.css');
+@import url('./css/overlays.css');
+@import url('./css/toast.css');
+@import url('./css/animations.css');
+@import url('./css/responsive.css');

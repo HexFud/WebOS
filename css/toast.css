@@ -1,0 +1,40 @@
+/* toast.css — Toast notification stack. */
+
+.toast-stack {
+  top: 20px;
+  right: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.toast {
+  width: min(340px, calc(100vw - 40px));
+  padding: 14px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--stroke-strong);
+  background: rgba(16, 24, 39, 0.88);
+  color: white;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  animation: toast-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+[data-theme="light"] .toast {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--text);
+}
+
+.toast--error {
+  border-color: rgba(255, 121, 121, 0.38);
+}
+
+.toast-title {
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.toast-body {
+  color: inherit;
+  opacity: 0.82;
+}
+

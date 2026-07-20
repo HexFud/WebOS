@@ -1,0 +1,80 @@
+/* base.css — Global resets, CSS variables (theme palette) and base body styles. */
+
+:root {
+  --bg: #08111d;
+  --bg-soft: rgba(13, 20, 33, 0.72);
+  --glass: rgba(18, 27, 44, 0.38);
+  --glass-strong: rgba(18, 28, 46, 0.62);
+  --glass-stronger: rgba(16, 24, 39, 0.72);
+  --stroke: rgba(255, 255, 255, 0.12);
+  --stroke-strong: rgba(255, 255, 255, 0.2);
+  --text: rgba(248, 250, 255, 0.98);
+  --muted: rgba(219, 229, 247, 0.72);
+  --muted-strong: rgba(219, 229, 247, 0.52);
+  --accent: #85d8ff;
+  --accent-2: #b79cff;
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.22);
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --wallpaper-accent: #85d8ff;
+}
+
+[data-theme="light"] {
+  --bg: #f0f5fb;
+  --bg-soft: rgba(248, 250, 255, 0.76);
+  --glass: rgba(255, 255, 255, 0.55);
+  --glass-strong: rgba(255, 255, 255, 0.68);
+  --glass-stronger: rgba(255, 255, 255, 0.8);
+  --stroke: rgba(13, 31, 57, 0.12);
+  --stroke-strong: rgba(13, 31, 57, 0.18);
+  --text: rgba(17, 24, 39, 0.98);
+  --muted: rgba(49, 67, 91, 0.74);
+  --muted-strong: rgba(49, 67, 91, 0.54);
+  --shadow: 0 26px 70px rgba(14, 21, 36, 0.16);
+  --shadow-soft: 0 10px 26px rgba(14, 21, 36, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  color: var(--text);
+  background: var(--bg);
+  font-family: "Inter", "SF Pro Display", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 260ms cubic-bezier(0.2, 0.8, 0.2, 1), color 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(133, 216, 255, 0.8);
+  outline-offset: 2px;
+}
+
+#root {
+  isolation: isolate;
+}
+

@@ -1,0 +1,80 @@
+/* trash-app.css — Trash app list and empty state. */
+
+.trash-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  height: calc(100% - 52px);
+}
+
+.trash-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.trash-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.trash-item-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.trash-item-name {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.trash-item-date {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.trash-item-restore {
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.trash-item-restore:hover {
+  background: rgba(133, 216, 255, 0.18);
+  border-color: rgba(133, 216, 255, 0.4);
+}
+
+.trash-empty {
+  height: calc(100% - 52px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.trash-empty .tray-icon {
+  width: 36px;
+  height: 36px;
+  opacity: 0.5;
+}
+

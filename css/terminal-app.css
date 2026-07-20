@@ -1,0 +1,62 @@
+/* terminal-app.css — Terminal app output log and input row. */
+
+.terminal-app {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 12px;
+  height: 100%;
+  padding: 2px;
+}
+
+.terminal-output {
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.terminal-line {
+  white-space: pre-wrap;
+}
+
+.terminal-line--command {
+  color: rgba(133, 216, 255, 0.92);
+}
+
+.terminal-line--output {
+  color: var(--text);
+}
+
+.terminal-line--error {
+  color: #ff8f9a;
+}
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--stroke);
+}
+
+.terminal-prompt {
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.terminal-input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  outline: none;
+}
+

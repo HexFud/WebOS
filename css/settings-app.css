@@ -1,0 +1,106 @@
+/* settings-app.css — Settings app: appearance panel, wallpaper grid, system info. */
+
+.settings-app {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 14px;
+  height: 100%;
+}
+
+.settings-panel {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-toggle-row {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.settings-toggle {
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1), background 150ms cubic-bezier(0.2, 0.8, 0.2, 1), color 150ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.settings-toggle--active {
+  color: var(--text);
+  background: linear-gradient(135deg, rgba(133, 216, 255, 0.18), rgba(183, 156, 255, 0.16));
+  border-color: rgba(133, 216, 255, 0.28);
+}
+
+.wallpaper-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.wallpaper-card {
+  position: relative;
+  min-height: 110px;
+  border: 1px solid var(--stroke);
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--text);
+  box-shadow: var(--shadow-soft);
+  transition: transform 170ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 170ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.wallpaper-card:hover {
+  transform: translateY(-2px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.wallpaper-card--active {
+  box-shadow: 0 0 0 1px rgba(133, 216, 255, 0.32) inset, var(--shadow-soft);
+}
+
+.wallpaper-card-label {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(12px);
+  font-size: 12px;
+}
+
+.settings-info-list {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.settings-info-list > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--stroke);
+}
+
+.settings-info-list dt {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.settings-info-list dd {
+  margin: 0;
+  color: var(--text);
+  font-weight: 700;
+  text-align: right;
+}
+

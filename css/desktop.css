@@ -1,0 +1,94 @@
+/* desktop.css — Desktop surface, desktop icon grid and icon visuals. */
+
+.desktop {
+  position: absolute;
+  inset: 0;
+  padding: 46px 18px 118px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 320ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.shell--login .desktop,
+.shell--setup .desktop {
+  transform: scale(0.985);
+  filter: blur(3px) brightness(0.72) saturate(0.92);
+  opacity: 0.92;
+}
+
+.desktop-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 7, 17, 0.18), rgba(3, 7, 17, 0.34));
+  pointer-events: none;
+}
+
+.desktop-icons {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.desktop-icon {
+  position: absolute;
+  width: 92px;
+  min-height: 102px;
+  padding: 12px 10px 10px;
+  border: 0;
+  border-radius: 20px;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  cursor: grab;
+  user-select: none;
+  color: var(--text);
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), background 180ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: icon-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.desktop-icon:hover {
+  transform: translateY(-4px) scale(1.03);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-soft);
+}
+
+.desktop-icon--selected {
+  background: rgba(133, 216, 255, 0.14);
+  box-shadow: 0 0 0 1px rgba(133, 216, 255, 0.22) inset, var(--shadow-soft);
+}
+
+.desktop-icon-visual {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.app-icon-svg,
+.tray-icon,
+.control-svg {
+  width: 28px;
+  height: 28px;
+  color: currentColor;
+}
+
+.desktop-icon-label {
+  width: 100%;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.desktop-icon--trash {
+  left: auto;
+  right: 20px;
+  bottom: 110px;
+  top: auto;
+}
+
