@@ -1,5 +1,3 @@
-/* settings-app.css — Settings app: appearance panel, wallpaper grid, system info. */
-
 .settings-app {
   display: grid;
   grid-template-columns: 1.25fr 0.9fr;
@@ -31,8 +29,8 @@
 
 .settings-toggle--active {
   color: var(--text);
-  background: linear-gradient(135deg, rgba(133, 216, 255, 0.18), rgba(183, 156, 255, 0.16));
-  border-color: rgba(133, 216, 255, 0.28);
+  background: linear-gradient(135deg, rgba(10, 132, 255, 0.18), rgba(183, 156, 255, 0.16));
+  border-color: rgba(10, 132, 255, 0.28);
 }
 
 .wallpaper-grid {
@@ -45,7 +43,7 @@
   position: relative;
   min-height: 110px;
   border: 1px solid var(--stroke);
-  border-radius: 22px;
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   color: var(--text);
@@ -59,7 +57,7 @@
 }
 
 .wallpaper-card--active {
-  box-shadow: 0 0 0 1px rgba(133, 216, 255, 0.32) inset, var(--shadow-soft);
+  box-shadow: 0 0 0 1px rgba(10, 132, 255, 0.32) inset, var(--shadow-soft);
 }
 
 .wallpaper-card-label {
@@ -71,6 +69,39 @@
   background: rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(12px);
   font-size: 12px;
+}
+
+.wallpaper-card--custom {
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-style: dashed;
+}
+
+.wallpaper-card--custom .wallpaper-card-label {
+  position: static;
+  background: transparent;
+  backdrop-filter: none;
+  font-weight: 700;
+}
+
+.wallpaper-upload-input {
+  display: none;
+}
+
+.settings-upload-error {
+  color: #ff8a80;
+  font-size: 12.5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 100, 100, 0.1);
+  border: 1px solid rgba(255, 100, 100, 0.25);
+}
+
+.settings-hint {
+  color: var(--muted-strong);
+  font-size: 11.5px;
+  line-height: 1.5;
 }
 
 .settings-info-list {
@@ -85,7 +116,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 14px 16px;
-  border-radius: 18px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--stroke);
 }

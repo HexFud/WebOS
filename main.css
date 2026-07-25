@@ -1,8 +1,7 @@
-/* Main stylesheet: imports every module. Split by area so each file stays small and focused. */
-
 @import url('./css/base.css');
 @import url('./css/shell.css');
 @import url('./css/desktop.css');
+@import url('./css/sticky-note.css');
 @import url('./css/menubar.css');
 @import url('./css/control-center.css');
 @import url('./css/taskbar.css');
@@ -17,6 +16,7 @@
 @import url('./css/explorer-app.css');
 @import url('./css/boot-login.css');
 @import url('./css/overlays.css');
+@import url('./css/mission-control.css');
 @import url('./css/toast.css');
 @import url('./css/animations.css');
 @import url('./css/responsive.css');

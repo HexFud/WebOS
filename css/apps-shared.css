@@ -1,5 +1,3 @@
-/* apps-shared.css — Shared layout for every app window body plus common toolbar/chip styles. */
-
 .notes-app,
 .browser-app,
 .settings-app,
@@ -52,5 +50,11 @@
 
 .app-toolbar--compact {
   justify-content: space-between;
+}
+
+.app-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
