@@ -8,8 +8,9 @@ export function StickyNote({ note, onChange, onMove, onDelete, onColorChange, on
 
   function startDrag(event) {
     if (event.button !== 0) return;
-    if (event.target.closest('.sticky-note-body') || event.target.closest('.sticky-note-toolbar')) return;
+    if (event.target.closest('.sticky-note-body') || event.target.closest('.sticky-note-swatch') || event.target.closest('.sticky-note-delete')) return;
     event.preventDefault();
+    event.stopPropagation();
     onFocus();
     const startX = event.clientX;
     const startY = event.clientY;

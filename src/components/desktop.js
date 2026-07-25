@@ -86,7 +86,7 @@ export function Desktop({ state, dispatch, openApp, showToast }) {
   function onDesktopPointerDown(event) {
     dispatch({ type: 'CLOSE_OVERLAYS' });
     if (event.button !== 0) return;
-    if (event.target.closest('.desktop-icon')) return;
+    if (event.target.closest('.desktop-icon') || event.target.closest('.sticky-note')) return;
     const startX = event.clientX;
     const startY = event.clientY;
     let moved = false;
