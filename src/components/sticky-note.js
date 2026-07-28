@@ -16,15 +16,22 @@ export function StickyNote({ note, onChange, onMove, onDelete, onColorChange, on
     const startY = event.clientY;
     const originX = note.x;
     const originY = note.y;
+    let finished = false;
     const move = (moveEvent) => {
       onMove(note.id, originX + (moveEvent.clientX - startX), originY + (moveEvent.clientY - startY));
     };
-    const up = () => {
+    const finish = () => {
+      if (finished) return;
+      finished = true;
       window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+      window.removeEventListener('blur', finish);
     };
     window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
+    window.addEventListener('blur', finish);
   }
 
   return h('div', {

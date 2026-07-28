@@ -13,8 +13,8 @@
 .login-card {
   width: min(520px, calc(100vw - 32px));
   padding: 30px 28px;
-  border-radius: 16px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.07));
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.06));
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: var(--shadow);
   text-align: center;
@@ -164,7 +164,7 @@
 .login-input {
   width: 100%;
   border: 1px solid var(--stroke);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 14px 16px;
   color: var(--text);
   background: rgba(255, 255, 255, 0.08);
@@ -191,7 +191,7 @@
 .login-button {
   width: 100%;
   border: 0;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 14px 16px;
   font-weight: 800;
   cursor: pointer;

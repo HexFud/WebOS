@@ -24,6 +24,7 @@ export function DesktopIcon({item: item, items: items, selected: selected, selec
     });
     const startX = event.clientX;
     const startY = event.clientY;
+    let finished = false;
     const move = moveEvent => {
       const dx = moveEvent.clientX - startX;
       const dy = moveEvent.clientY - startY;
@@ -33,11 +34,15 @@ export function DesktopIcon({item: item, items: items, selected: selected, selec
         y: origins[id].y + dy
       })));
     };
-    const up = upEvent => {
+    const finish = upEvent => {
+      if (finished) return;
+      finished = true;
       window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerup", up);
-      const dx = upEvent.clientX - startX;
-      const dy = upEvent.clientY - startY;
+      window.removeEventListener("pointerup", finish);
+      window.removeEventListener("pointercancel", finish);
+      window.removeEventListener("blur", finish);
+      const dx = (upEvent?.clientX ?? startX) - startX;
+      const dy = (upEvent?.clientY ?? startY) - startY;
       onEnd(groupIds.filter(id => origins[id]).map(id => ({
         id: id,
         x: origins[id].x + dx,
@@ -45,7 +50,9 @@ export function DesktopIcon({item: item, items: items, selected: selected, selec
       })));
     };
     window.addEventListener("pointermove", move);
-    window.addEventListener("pointerup", up);
+    window.addEventListener("pointerup", finish);
+    window.addEventListener("pointercancel", finish);
+    window.addEventListener("blur", finish);
   }
   return h("button", {
     ref: ref,

@@ -90,16 +90,23 @@ export function Desktop({ state, dispatch, openApp, showToast }) {
     const startX = event.clientX;
     const startY = event.clientY;
     let moved = false;
+    let finished = false;
     setMarquee({ x1: startX, y1: startY, x2: startX, y2: startY });
 
     const move = (moveEvent) => {
       moved = true;
       setMarquee({ x1: startX, y1: startY, x2: moveEvent.clientX, y2: moveEvent.clientY });
     };
-    const up = (upEvent) => {
+    const finish = (endEvent) => {
+      if (finished) return;
+      finished = true;
       window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-      const rect = normalizeRect(startX, startY, upEvent.clientX, upEvent.clientY);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+      window.removeEventListener('blur', finish);
+      const endX = endEvent?.clientX ?? startX;
+      const endY = endEvent?.clientY ?? startY;
+      const rect = normalizeRect(startX, startY, endX, endY);
       if (moved && (rect.width > 4 || rect.height > 4)) {
         const ids = desktopItems.filter((item) => rectsIntersect(rect, { x: item.x, y: item.y, width: ICON_WIDTH, height: ICON_HEIGHT })).map((item) => item.id);
         dispatch({ type: 'SET_DESKTOP_SELECTION', value: ids });
@@ -109,7 +116,9 @@ export function Desktop({ state, dispatch, openApp, showToast }) {
       setMarquee(null);
     };
     window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
+    window.addEventListener('blur', finish);
   }
 
   const marqueeRect = marquee ? normalizeRect(marquee.x1, marquee.y1, marquee.x2, marquee.y2) : null;
