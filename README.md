@@ -64,3 +64,6 @@ Each file has a single responsibility: JS modules use real `import`/`export` (no
 - The internal browser cannot load websites that explicitly forbid iframe embedding (e.g., Google) — this is a security restriction enforced by the website itself and cannot be bypassed on the client side.
 - The Battery Status API is not supported by all browsers (e.g., Firefox and Safari have removed it): in that case, the battery indicator will remain generic.
 
+## AI Declaration
+
+I made very limited use of AI during this project. It was only used to help create the initial structure of the code.
