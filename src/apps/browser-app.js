@@ -35,7 +35,7 @@ export function BrowserApp({ payload, onUpdate, showToast }) {
 
   function goToUrl(url) {
     pushEntry({ kind: 'web', url });
-    showToast('Caricamento pagina', url);
+    showToast('Loading page', url);
   }
 
   function resolveInput(raw) {
@@ -81,12 +81,12 @@ export function BrowserApp({ payload, onUpdate, showToast }) {
       h('form', { className: 'browser-address-form', onSubmit: (event) => { event.preventDefault(); resolveInput(addressInput); } },
         h('input', { className: 'browser-address', value: addressInput, onChange: (event) => setAddressInput(event.target.value), spellCheck: false, autoComplete: 'off', placeholder: 'Cerca o digita un indirizzo web (es. wikipedia.org)' })
       ),
-      current.kind === 'web' && h('a', { className: 'browser-nav-button browser-external-link', href: current.url, target: '_blank', rel: 'noopener noreferrer' }, 'Apri ↗')
+      current.kind === 'web' && h('a', { className: 'browser-nav-button browser-external-link', href: current.url, target: '_blank', rel: 'noopener noreferrer' }, 'Open ↗')
     ),
     currentPage
       ? h('div', { className: 'browser-page' }, h('div', { className: 'browser-page-hero' }, h('div', { className: 'browser-page-tag' }, 'PAGINA INTERNA'), h('h2', null, currentPage.title), h('p', null, currentPage.subtitle)), h('div', { className: 'browser-card-grid' }, currentPage.body.map((text, index) => h('article', { className: 'browser-card', key: index }, text))))
       : h('div', { className: 'browser-frame-wrap' },
-          loading && h('div', { className: 'browser-loading' }, h('div', { className: 'browser-loading-spinner' }), h('span', null, 'Caricamento…')),
+          loading && h('div', { className: 'browser-loading' }, h('div', { className: 'browser-loading-spinner' }), h('span', null, 'Loading…')),
           h('iframe', {
             key: current.url,
             ref: iframeRef,
@@ -96,7 +96,7 @@ export function BrowserApp({ payload, onUpdate, showToast }) {
             onLoad: () => setLoading(false),
             sandbox: 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox'
           }),
-          h('div', { className: 'browser-frame-note' }, 'Alcuni siti bloccano la visualizzazione in iframe per motivi di sicurezza: usa "Apri ↗" per aprirli in una nuova scheda.')
+          h('div', { className: 'browser-frame-note' }, 'Some sites block iframe previews for security reasons. Use “Open ↗” to view them in a new tab.')
         )
   );
 }

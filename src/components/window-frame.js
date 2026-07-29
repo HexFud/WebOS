@@ -51,6 +51,7 @@ export function WindowFrame({windowItem: windowItem, state: state, dispatch: dis
     className: [ "window", state.activeWindowId === windowItem.id ? "window--active" : "", windowItem.minimized ? "window--minimized" : "", windowItem.maximized ? "window--maximized" : "", windowItem.closing ? "window--closing" : "", windowItem.origin ? "window--spawned" : "" ].join(" "),
     style: style,
     "data-window-id": windowItem.id,
+    onPointerDown: event => event.stopPropagation(),
     onMouseDown: () => dispatch({
       type: "FOCUS_WINDOW",
       id: windowItem.id
@@ -123,6 +124,7 @@ export function detectSnapSide(clientX, clientY) {
 export function startWindowDrag(event, windowItem, dispatch, frameRef, liveRef, interactingRef) {
   if (event.button !== 0 || windowItem.maximized) return;
   event.preventDefault();
+  event.stopPropagation();
   const startX = event.clientX;
   const startY = event.clientY;
   const originX = windowItem.x;

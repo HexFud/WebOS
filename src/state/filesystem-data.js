@@ -8,6 +8,10 @@ export const BASE_ITEMS = [
   { id: 'shortcut-settings', type: 'shortcut', name: 'Settings', appKey: 'settings', icon: 'settings', showOnDesktop: true },
   { id: 'shortcut-calc', type: 'shortcut', name: 'Calculator', appKey: 'calc', icon: 'calc', showOnDesktop: true },
   { id: 'shortcut-terminal', type: 'shortcut', name: 'Terminal', appKey: 'terminal', icon: 'terminal', showOnDesktop: true },
+  { id: 'shortcut-paint', type: 'shortcut', name: 'Paint', appKey: 'paint', icon: 'paint', showOnDesktop: true },
+  { id: 'shortcut-clock', type: 'shortcut', name: 'Clock', appKey: 'clock', icon: 'clock', showOnDesktop: true },
+  { id: 'shortcut-calendar', type: 'shortcut', name: 'Calendar', appKey: 'calendar', icon: 'calendar', showOnDesktop: true },
+  { id: 'shortcut-media', type: 'shortcut', name: 'Media Player', appKey: 'media', icon: 'media', showOnDesktop: true },
   {
     id: 'folder-projects',
     type: 'folder',

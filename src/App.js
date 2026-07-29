@@ -9,6 +9,7 @@ import { APPS } from "./lib/apps-registry.js";
 import { uid, buildWindowBounds, clamp } from "./lib/utils.js";
 
 import { persistAccount, persistWorkspace } from "./lib/storage.js";
+import { t } from "./lib/i18n.js";
 
 import { reducer } from "./state/reducer.js";
 
@@ -44,8 +45,8 @@ export function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const bootStart = useRef(Date.now());
   useEffect(() => {
-    document.documentElement.lang = "it";
-  }, []);
+    document.documentElement.lang = state.language;
+  }, [ state.language ]);
   useEffect(() => {
     document.documentElement.dataset.theme = state.theme;
     document.body.dataset.theme = state.theme;
@@ -64,7 +65,7 @@ export function App() {
     bootStart.current = Date.now();
     const progress = window.setInterval(() => dispatch({
       type: "BOOT_PROGRESS",
-      value: Math.min(100, 18 + (Date.now() - bootStart.current) / BOOT_MS * 82)
+      value: Math.min(100, (Date.now() - bootStart.current) / BOOT_MS * 100)
     }), 70);
     const done = window.setTimeout(() => dispatch({
       type: "BOOT_FINISHED"
@@ -169,22 +170,23 @@ export function App() {
       wallpaper: state.wallpaper,
       customWallpaper: state.customWallpaper,
       theme: state.theme,
+      language: state.language,
       trash: state.trash
     });
-  }, [ state.account, state.filesystem, state.notesText, state.stickyNotes, state.wallpaper, state.customWallpaper, state.theme, state.trash ]);
+  }, [ state.account, state.filesystem, state.notesText, state.stickyNotes, state.wallpaper, state.customWallpaper, state.theme, state.language, state.trash ]);
   const submitSetup = () => {
     const name = state.setupName.trim();
     if (!name) return dispatch({
       type: "SETUP_ERROR",
-      value: "Please enter a display name."
+      value: t(state.language, "enterName")
     });
     if (state.setupPassword.length < MIN_PASSWORD_LENGTH) return dispatch({
       type: "SETUP_ERROR",
-      value: `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`
+      value: t(state.language, "passwordLength", { count: MIN_PASSWORD_LENGTH })
     });
     if (state.setupPassword !== state.setupPasswordConfirm) return dispatch({
       type: "SETUP_ERROR",
-      value: "Passwords do not match."
+      value: t(state.language, "passwordsMismatch")
     });
     const account = {
       userName: name,
@@ -198,16 +200,16 @@ export function App() {
     window.setTimeout(() => dispatch({
       type: "LOGIN_UNLOCKED"
     }), UNLOCK_MS);
-    showToast("Account created", `Welcome to WebOS, ${name}.`);
+    showToast(t(state.language, "accountCreated"), t(state.language, "welcome", { name }));
   };
   const submitLogin = () => {
     if (!state.loginPassword.trim()) return dispatch({
       type: "LOGIN_ERROR",
-      value: "Please enter your password."
+      value: t(state.language, "enterPasswordError")
     });
     if (state.loginPassword !== state.account?.password) return dispatch({
       type: "LOGIN_ERROR",
-      value: "Incorrect password. Try again."
+      value: t(state.language, "incorrectPassword")
     });
     dispatch({
       type: "LOGIN_START_UNLOCK"
@@ -288,7 +290,7 @@ export function App() {
           y: spawnY
         }
       });
-      showToast("Sticky note created", "Trascinala dove vuoi.");
+      showToast("Sticky note created", "Drag it anywhere you like.");
     }
     if (action === "set-wallpaper") {
       dispatch({
@@ -393,6 +395,7 @@ export function App() {
     unlocking: state.unlocking,
     error: state.setupError,
     shake: state.authShake,
+    language: state.language,
     onNameChange: value => dispatch({
       type: "SETUP_NAME_CHANGED",
       value: value
@@ -416,6 +419,7 @@ export function App() {
     unlocking: state.unlocking,
     error: state.loginError,
     shake: state.authShake,
+    language: state.language,
     onPasswordChange: value => dispatch({
       type: "LOGIN_PASSWORD_CHANGED",
       value: value

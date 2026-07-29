@@ -4,14 +4,14 @@ const MAX_BYTES = 6 * 1024 * 1024;
 export function readImageAsWallpaper(file) {
   return new Promise((resolve, reject) => {
     if (!file) return reject(new Error('Nessun file selezionato.'));
-    if (!file.type.startsWith('image/')) return reject(new Error('Il file scelto non è un\'immagine.'));
+    if (!file.type.startsWith('image/')) return reject(new Error('The selected file is not an image.'));
     if (file.size > MAX_BYTES) return reject(new Error('Immagine troppo grande (limite 6 MB).'));
 
     const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Impossibile leggere il file.'));
+    reader.onerror = () => reject(new Error('Unable to read the file.'));
     reader.onload = () => {
       const img = new Image();
-      img.onerror = () => reject(new Error('Impossibile decodificare l\'immagine.'));
+      img.onerror = () => reject(new Error('Unable to decode the image.'));
       img.onload = () => {
         const scale = Math.min(1, MAX_DIMENSION / Math.max(img.width, img.height));
         const width = Math.max(1, Math.round(img.width * scale));

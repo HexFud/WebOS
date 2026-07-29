@@ -129,7 +129,7 @@ export function ExplorerApp({payload: payload, filesystem: filesystem, onUpdate:
       const sourceId = event.dataTransfer.getData("text/plain") || draggingId;
       if (sourceId && sourceId !== node.id) {
         onMoveNode(sourceId, node.id);
-        showToast("Spostato", `Elemento spostato in "${node.name}".`);
+        showToast("Moved", `Item moved to "${node.name}".`);
       }
       setDragOverId(null);
       setDraggingId(null);

@@ -136,6 +136,9 @@ export function reducer(state, action) {
       theme: action.value
     };
 
+   case "SET_LANGUAGE":
+    return { ...state, language: action.value === "it" ? "it" : "en" };
+
    case "SET_WALLPAPER":
     return {
       ...state,

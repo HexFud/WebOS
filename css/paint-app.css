@@ -1,0 +1,42 @@
+.paint-app,
+.clock-app { width: 100%; height: 100%; }
+
+.paint-app { display: flex; flex-direction: column; gap: 12px; }
+.paint-toolbar { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
+.paint-colors { display: flex; gap: 7px; align-items: center; }
+.paint-color { width: 22px; height: 22px; padding: 0; border: 2px solid rgba(255,255,255,.42); border-radius: 50%; cursor: pointer; box-shadow: inset 0 0 0 1px rgba(0,0,0,.16); }
+.paint-color--active { outline: 2px solid #0a84ff; outline-offset: 2px; }
+.paint-size { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; }
+.paint-size input { width: 100px; accent-color: #0a84ff; }
+.paint-actions { display: flex; gap: 8px; margin-left: auto; }
+.paint-actions button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.paint-canvas-wrap { flex: 1; min-height: 200px; padding: 1px; border-radius: 10px; background: rgba(0,0,0,.18); overflow: hidden; }
+.paint-canvas { display: block; width: 100%; height: 100%; touch-action: none; background: #fff; cursor: crosshair; }
+
+.clock-app { display: grid; place-content: center; text-align: center; color: var(--text); }
+.clock-app__time { font-size: clamp(44px, 9vw, 78px); font-weight: 300; letter-spacing: -.065em; font-variant-numeric: tabular-nums; }
+.clock-app__date { margin-top: 9px; font-size: 15px; color: var(--muted); }
+.clock-app__zone { margin-top: 24px; padding: 6px 10px; border: 1px solid var(--stroke); border-radius: 999px; justify-self: center; font: 11px var(--font-mono); color: var(--muted); }
+.clock-stopwatch { width: 260px; margin-top: 28px; padding-top: 19px; border-top: 1px solid var(--stroke); }
+.clock-stopwatch__label { color: var(--muted); font: 10px var(--font-mono); letter-spacing: .11em; }
+.clock-stopwatch__value { margin-top: 5px; font: 26px var(--font-mono); font-variant-numeric: tabular-nums; }
+.clock-stopwatch__actions { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+
+.calendar-app { width: 100%; height: 100%; }
+.calendar-toolbar { display: flex; justify-content: center; gap: 8px; }
+.calendar-toolbar .app-toolbar-chip { min-width: 38px; padding: 7px 12px; }
+.calendar-title { margin: 20px 0 15px; text-align: center; font-size: 23px; letter-spacing: -.03em; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.calendar-weekday { padding-bottom: 6px; color: var(--muted); font-size: 11px; text-align: center; }
+.calendar-day { aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; font-size: 13px; }
+.calendar-day--today { background: #0a84ff; color: #fff; box-shadow: 0 5px 14px rgba(10,132,255,.3); }
+.calendar-day--outside { opacity: 0; }
+
+.media-app { width: 100%; height: 100%; display: grid; place-items: center; }
+.media-input { display: none; }
+.media-empty, .media-player { width: min(100%, 520px); text-align: center; }
+.media-empty__icon, .media-audio__art { width: 86px; height: 86px; display: grid; place-items: center; margin: 0 auto 16px; border-radius: 22px; background: linear-gradient(145deg, #0a84ff, #7b61ff); color: #fff; font-size: 34px; box-shadow: 0 16px 32px rgba(10,132,255,.25); }
+.media-empty h2 { margin: 0; font-size: 24px; }.media-empty p { margin: 8px 0 19px; color: var(--muted); }
+.media-video { display: block; width: 100%; max-height: 300px; border-radius: 10px; background: #000; }
+.media-audio { padding: 26px; border: 1px solid var(--stroke); border-radius: 14px; background: rgba(255,255,255,.05); }.media-audio audio { width: 100%; }
+.media-name { margin: 14px 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }

@@ -2,6 +2,18 @@ import { h } from "../lib/dom.js";
 
 export function Icon({icon: icon, level: level, charging: charging}) {
   switch (icon) {
+   case "paint":
+    return h("svg", { viewBox: "0 0 24 24", className: "app-icon-svg", "aria-hidden": "true" }, h("path", { d: "M12 3.8a8.2 8.2 0 1 0 0 16.4h1.1a1.8 1.8 0 0 0 1.1-3.2 1.8 1.8 0 0 1 1.1-3.2h.9A3.9 3.9 0 0 0 20 9.9c0-3.4-3.6-6.1-8-6.1Z", fill: "none", stroke: "currentColor", strokeWidth: "1.6", strokeLinejoin: "round" }), h("circle", { cx: "7.9", cy: "10.3", r: "1", fill: "currentColor" }), h("circle", { cx: "10.8", cy: "7.5", r: "1", fill: "currentColor" }), h("circle", { cx: "14.7", cy: "8.1", r: "1", fill: "currentColor" }));
+
+   case "clock":
+    return h("svg", { viewBox: "0 0 24 24", className: "app-icon-svg", "aria-hidden": "true" }, h("circle", { cx: "12", cy: "12", r: "8.3", fill: "none", stroke: "currentColor", strokeWidth: "1.6" }), h("path", { d: "M12 7.2v5l3.3 2", fill: "none", stroke: "currentColor", strokeWidth: "1.6", strokeLinecap: "round", strokeLinejoin: "round" }));
+
+   case "calendar":
+    return h("svg", { viewBox: "0 0 24 24", className: "app-icon-svg", "aria-hidden": "true" }, h("rect", { x: "4.2", y: "5.5", width: "15.6", height: "14", rx: "2.4", fill: "none", stroke: "currentColor", strokeWidth: "1.6" }), h("path", { d: "M7.5 3.8v3.5M16.5 3.8v3.5M4.2 9.4h15.6", fill: "none", stroke: "currentColor", strokeWidth: "1.6", strokeLinecap: "round" }), h("path", { d: "M8 13h.01M12 13h.01M16 13h.01M8 16.2h.01M12 16.2h.01", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round" }));
+
+   case "media":
+    return h("svg", { viewBox: "0 0 24 24", className: "app-icon-svg", "aria-hidden": "true" }, h("rect", { x: "3.7", y: "5.2", width: "16.6", height: "13.6", rx: "3", fill: "none", stroke: "currentColor", strokeWidth: "1.6" }), h("path", { d: "m10 9 5 3-5 3Z", fill: "currentColor" }));
+
    case "notes":
     return h("svg", {
       viewBox: "0 0 24 24",

@@ -17,6 +17,10 @@ import { CalculatorApp } from "./calculator-app.js";
 import { TerminalApp } from "./terminal-app.js";
 
 import { ExplorerApp } from "./explorer-app.js";
+import { PaintApp } from "./paint-app.js";
+import { ClockApp } from "./clock-app.js";
+import { CalendarApp } from "./calendar-app.js";
+import { MediaApp } from "./media-app.js";
 
 export function renderApp(windowItem, state, dispatch, openApp, showToast, openDesktopItem) {
   const payload = windowItem.payload || {};
@@ -59,6 +63,10 @@ export function renderApp(windowItem, state, dispatch, openApp, showToast, openD
         type: "SET_CUSTOM_WALLPAPER",
         value: value
       }),
+      onLanguage: value => dispatch({
+        type: "SET_LANGUAGE",
+        value: value
+      }),
       onLogout: () => {
         clearStoredAccount();
         clearStoredWorkspace();
@@ -79,6 +87,18 @@ export function renderApp(windowItem, state, dispatch, openApp, showToast, openD
         payload: nextPayload
       })
     });
+
+   case "paint":
+    return h(PaintApp);
+
+   case "clock":
+    return h(ClockApp);
+
+   case "calendar":
+    return h(CalendarApp);
+
+   case "media":
+    return h(MediaApp);
 
    case "terminal":
     return h(TerminalApp, {

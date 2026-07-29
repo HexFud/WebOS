@@ -1,222 +1,86 @@
-.boot-screen,
+.boot-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #e8ece5;
+  background: #060806;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+.boot-screen__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .28;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 4px);
+}
+
+.boot-screen__content { width: min(760px, calc(100vw - 40px)); position: relative; }
+
+.boot-menu { animation: boot-reveal 280ms ease-out both; }
+.boot-menu__brand { margin-bottom: 48px; color: #fff; font-size: 15px; }
+.boot-menu__list { padding: 18px 0; border-block: 1px solid rgba(206, 221, 195, .28); }
+.boot-menu__choice { padding: 7px 16px; color: #bfc7ba; font-size: 14px; }
+.boot-menu__choice--active { color: #121611; background: #d7e6cf; box-shadow: 0 0 22px rgba(215,230,207,.14); animation: grub-select 160ms ease-out both; }
+.boot-menu__hint { margin: 26px 0 0; color: #a8b1a1; font-size: 12px; }
+.boot-menu__timer { margin-top: 12px; color: #7f8d78; font-size: 12px; animation: boot-flicker 1.4s ease-in-out infinite; }
+
+.linux-boot { animation: boot-reveal 180ms ease-out both; }
+.linux-boot__head { display: flex; gap: 11px; align-items: center; padding-bottom: 13px; border-bottom: 1px solid rgba(166, 210, 145, .25); color: #aab4a4; font-size: 12px; }
+.linux-boot__mark { color: #d8ff87; font-weight: 600; letter-spacing: .08em; }
+.linux-boot__log { min-height: 204px; padding: 18px 0 12px; font-size: clamp(10px, 1.65vw, 13px); line-height: 1.82; }
+.linux-boot__line { margin: 0; color: #c7d2c2; animation: boot-log-line 180ms ease-out both; animation-delay: var(--line-delay); }
+.linux-boot__line::first-letter { color: #d8ff87; }
+.linux-boot__cursor { display: inline; margin: 0; color: #d8ff87; animation: boot-cursor 720ms step-end infinite; }
+.linux-boot__footer { display: flex; justify-content: space-between; color: #9faa96; font-size: 11px; }
+.linux-boot__track { height: 3px; margin-top: 10px; overflow: hidden; background: rgba(212, 230, 204, .18); }
+.linux-boot__fill { height: 100%; background: #d8ff87; box-shadow: 0 0 12px rgba(216, 255, 135, .65); transition: width 70ms linear; }
+
 .login-screen {
   position: absolute;
   inset: 0;
   z-index: 40;
   display: grid;
   place-items: center;
-  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 40%), rgba(4, 7, 14, 0.46);
-  backdrop-filter: blur(18px);
+  background: rgba(6, 11, 22, .18);
+  backdrop-filter: blur(12px) saturate(1.08);
 }
 
-.boot-card,
-.login-card {
-  width: min(520px, calc(100vw - 32px));
-  padding: 30px 28px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.06));
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: var(--shadow);
-  text-align: center;
-  animation: panel-appear 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
+.login-card { width: min(360px, calc(100vw - 32px)); padding: 25px; border-radius: 16px; background: rgba(28, 28, 30, .62); border: 1px solid rgba(255, 255, 255, 0.17); box-shadow: 0 18px 54px rgba(0, 0, 0, .28), inset 0 1px rgba(255,255,255,.1); text-align: left; animation: panel-appear 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.login-card--setup { width: min(405px, calc(100vw - 32px)); }
+.auth-card__eyebrow { color: rgba(255,255,255,.56); font: 500 10px var(--font-display); letter-spacing: .04em; text-align: center; }
+.auth-header { padding: 16px 0 15px; }
+.login-avatar { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(145deg, #7b9dbd, #3f5878); color: rgba(255,255,255,.94); font-size: 27px; font-weight: 500; margin: 0 auto 13px; box-shadow: 0 7px 18px rgba(0, 0, 0, .22); border: 2px solid rgba(255,255,255,.22); }
+.login-avatar--setup { background: linear-gradient(145deg, #7d9cb7, #506b86); }
+.login-user { text-align: center; font-size: 21px; font-weight: 600; letter-spacing: -.02em; }
+.login-meta { text-align: center; margin-top: 6px; color: rgba(255,255,255,.68); font-size: 12px; text-transform: capitalize; }
+.auth-divider { height: 1px; background: rgba(255,255,255,.13); }
+.login-label { display: block; margin-top: 15px; margin-bottom: 7px; font-size: 12px; font-weight: 500; letter-spacing: 0; color: rgba(255,255,255,.78); }
+.login-password-wrap { position: relative; margin-bottom: 14px; }
+.login-password-wrap .login-input { margin-bottom: 0; padding-right: 74px; }
+.login-password-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: rgba(255,255,255,.68); font-size: 11px; font-weight: 500; padding: 6px 8px; border-radius: 6px; cursor: pointer; }
+.login-password-toggle:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+.login-input { width: 100%; border: 1px solid rgba(255,255,255,.17); border-radius: 7px; padding: 11px 12px; color: #fff; background: rgba(0, 0, 0, .24); margin-bottom: 12px; transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease; }
+.login-input::placeholder { color: rgba(212,224,248,.37); }
+.login-input:focus { border-color: #0a84ff; background: rgba(0, 0, 0, .3); box-shadow: 0 0 0 3px rgba(10, 132, 255, .32); outline: none; }
+.login-input--error { border-color: rgba(255, 139, 139, 0.7); background: rgba(255, 121, 121, 0.08); }
+.password-status { display: flex; gap: 7px; align-items: center; margin: -3px 0 5px; color: rgba(218,230,251,.6); font-size: 11px; }
+.password-status--valid { color: #b7ffc5; }.password-status--error { color: #ffb2b2; }
+.password-status__dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(218,230,251,.42); }.password-status__dot.is-valid { background: #9df8a6; box-shadow: 0 0 8px #9df8a6; }
+.auth-error { margin: 1px 0 14px; padding: 10px 12px; border-radius: 10px; background: rgba(255, 121, 121, 0.12); border: 1px solid rgba(255, 121, 121, 0.3); color: #ffb9b9; font-size: 12px; line-height: 1.4; animation: panel-appear 200ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.login-button { display: flex; justify-content: space-between; align-items: center; width: 100%; border: 0; border-radius: 7px; padding: 11px 13px; font-weight: 600; cursor: pointer; background: #0a84ff; color: white; box-shadow: 0 6px 16px rgba(10, 132, 255, .26); transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 160ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.login-button:hover { transform: translateY(-1px); box-shadow: 0 20px 38px rgba(10, 132, 255, 0.24); }
+.login-hint { margin-top: 13px; font-size: 11px; line-height: 1.5; color: rgba(218,230,251,.52); text-align: center; }
+.login-screen--unlocking { animation: login-fade 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.login-card--shake { animation: auth-shake 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
 
-.boot-logo-wrap {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 14px;
-}
+@keyframes boot-reveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes boot-log-line { from { opacity: 0; transform: translateX(-5px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes boot-cursor { 50% { opacity: 0; } }
+@keyframes boot-flicker { 50% { opacity: .58; } }
+@keyframes grub-select { from { transform: scaleX(.94); opacity: .25; } to { transform: scaleX(1); opacity: 1; } }
 
-.boot-logo-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  border-top-color: var(--wallpaper-accent);
-  animation: spin 1.2s linear infinite;
-}
-
-.boot-logo {
-  position: absolute;
-  inset: 18px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(10, 132, 255, 0.28), rgba(183, 156, 255, 0.18));
-  font-size: 48px;
-  font-weight: 900;
-  letter-spacing: -0.08em;
-  color: white;
-  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-.boot-title {
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-}
-
-.boot-subtitle,
-.boot-percent,
-.login-hint,
-.settings-info-list dt,
-.menu-bar-date,
-.notification-item-body {
-  color: var(--muted);
-}
-
-.boot-subtitle {
-  margin-top: 6px;
-  margin-bottom: 18px;
-}
-
-.boot-progress-track {
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  overflow: hidden;
-}
-
-.boot-progress-fill {
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--wallpaper-accent), rgba(183, 156, 255, 0.9));
-  transition: width 70ms linear;
-}
-
-.boot-percent {
-  margin-top: 12px;
-  font-size: 13px;
-}
-
-.login-card {
-  max-width: 400px;
-  text-align: left;
-  animation: panel-appear 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.login-avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, rgba(10, 132, 255, 0.26), rgba(183, 156, 255, 0.18));
-  font-size: 30px;
-  font-weight: 900;
-  margin: 0 auto 14px;
-}
-
-.login-user {
-  text-align: center;
-  font-size: 28px;
-  font-weight: 900;
-}
-
-.login-meta {
-  text-align: center;
-  margin-top: 6px;
-  color: var(--muted);
-  text-transform: capitalize;
-}
-
-.login-label {
-  display: block;
-  margin-top: 22px;
-  margin-bottom: 10px;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
-.login-password-wrap {
-  position: relative;
-  margin-bottom: 14px;
-}
-
-.login-password-wrap .login-input {
-  margin-bottom: 0;
-  padding-right: 74px;
-}
-
-.login-password-toggle {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 11.5px;
-  font-weight: 600;
-  padding: 6px 8px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.login-password-toggle:hover {
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.login-input {
-  width: 100%;
-  border: 1px solid var(--stroke);
-  border-radius: 14px;
-  padding: 14px 16px;
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.08);
-  margin-bottom: 14px;
-}
-
-.login-input--error {
-  border-color: rgba(255, 121, 121, 0.55);
-  background: rgba(255, 121, 121, 0.08);
-}
-
-.auth-error {
-  margin: -4px 0 14px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: rgba(255, 121, 121, 0.12);
-  border: 1px solid rgba(255, 121, 121, 0.3);
-  color: #ff9f9f;
-  font-size: 13px;
-  line-height: 1.4;
-  animation: panel-appear 200ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.login-button {
-  width: 100%;
-  border: 0;
-  border-radius: 14px;
-  padding: 14px 16px;
-  font-weight: 800;
-  cursor: pointer;
-  background: linear-gradient(135deg, rgba(10, 132, 255, 0.95), rgba(183, 156, 255, 0.88));
-  color: #08111d;
-  box-shadow: 0 18px 36px rgba(10, 132, 255, 0.18);
-  transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.login-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 20px 38px rgba(10, 132, 255, 0.24);
-}
-
-.login-hint {
-  margin-top: 12px;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.login-screen--unlocking {
-  animation: login-fade 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.login-card--shake {
-  animation: auth-shake 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
+@media (prefers-reduced-motion: reduce) { .boot-menu, .linux-boot, .linux-boot__line, .boot-menu__timer, .linux-boot__cursor { animation: none; } }

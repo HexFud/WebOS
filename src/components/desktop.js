@@ -73,7 +73,7 @@ export function Desktop({ state, dispatch, openApp, showToast }) {
       updates.forEach((update) => {
         dispatch({ type: 'MOVE_NODE', nodeId: update.id, targetFolderId: targetFolder.id });
       });
-      showToast('Spostato', updates.length > 1 ? `${updates.length} elementi spostati in "${targetFolder.name}".` : `Elemento spostato in "${targetFolder.name}".`);
+      showToast('Moved', updates.length > 1 ? `${updates.length} items moved to "${targetFolder.name}".` : `Item moved to "${targetFolder.name}".`);
       return;
     }
     dispatch({ type: 'UPDATE_FILESYSTEM', value: { ...state.filesystem, children: state.filesystem.children.map((child) => {
