@@ -1,16 +1,10 @@
-```text
- __        __   _      ___  ____
- \ \      / /__| |__  / _ \/ ___|
-  \ \ /\ / / _ \ '_ \| | | \___ \
-   \ V  V /  __/ |_) | |_| |___) |
-    \_/\_/ \___|_.__/ \___/|____/
-```
+## WebOA
 
-I built a macOS-inspired desktop environment that runs entirely in your browser. No Webpack, no Vite, no build steps—just plain HTML, CSS, and native ES modules. It comes with a window manager, a virtual file system, a terminal, and a few basic apps.
+This is my first project regarding a WebOS, I built a macOS-inspired desktop environment that runs entirely in the browser. 
 
 ## How to run it
 
-Because the code uses native JavaScript modules (`import`/`export`), you can't just double-click `index.html` to open it. You'll need a quick local web server. 
+Because the code uses native JavaScript modules (`import`/`export`), you cant just open index.html so you need to do one of the following things:
 
 If you have Python installed, open your terminal in the project folder and run:
 
@@ -19,38 +13,23 @@ python3 -m http.server 8000
 ```
 Then just go to `http://localhost:8000` in your browser.
 
-> **Windows users:** Sometimes Python's default server messes up the MIME types for `.js` files, which will break the app. If you get a blank screen, stop the server and run `python serve.py` instead (I included this script in the repo to fix that exact issue).
+On Windows sometimes Python won't start the server and you will get a blank screen If so stop the server and run `python3 serve.py`
+
+If you want just to see my WebOs you can just visit the GitHub pages site `https://hexfud.github.io/WebOS/`
 
 ## What can it do?
 
-*   **Window Management:** You can drag windows around, resize them from the edges, and snap them to the sides of the screen. I also added a Mission Control overview (hit `F3`) and Alt+Tab support.
-*   **Finder & Files:** A working file explorer. It supports nested folders, grid/list views, and a desktop where you can drag a marquee box to select multiple icons (hit Delete to trash them).
+*   **Window Management:** You can drag windows around, resize them from the edges, and snap them to the sides of the screen.
+*   **Finder & Files:** A working file explorer.
 *   **Text Editor:** You can actually write and save files. They are saved to your browser's `localStorage`, so they'll still be there when you refresh.
-*   **Web Browser:** An iframe-based browser to surf the web inside the web. *(Note: lots of sites block iframes for security, so there's an "Open in new tab" fallback button).*
+*   **Web Browser:** Just a browser to load real sites. *(Note: lots of sites block iframes for security, so there's an "Open in new tab" fallback button).*
 *   **Terminal:** A basic shell. Type `help` to see what you can do. You can use the up/down arrows for command history.
-*   **The OS Experience:** Spotlight search (`Cmd/Ctrl+K`), a Control Center, a Notification Center, a Trash can, and a Settings app to change your wallpaper and toggle dark mode.
-*   **Privacy:** Everything happens locally. There is no backend server, and your files/passwords never leave your browser.
+*   And many more!
 
-## How it's built
+## HOW THIS WAS MADE
 
-I wanted to keep this project completely dependency-free on the tooling side. React and ReactDOM are just pulled in via CDN as UMD scripts in the HTML file. 
-
-The state for the entire operating system is managed by one giant `useReducer` inside `src/state/reducer.js`. 
-
-Here is how the code is organized:
-
-```text
-index.html          # The main entry point
-main.css            # Imports the other CSS files
-css/                # Split up logically (dock, windows, apps) 
-src/
-  main.js           # Mounts the React app
-  App.js            # The root component (handles global keyboard shortcuts)
-  lib/              # Utilities, virtual file system logic, wallpapers
-  state/            # OS state and reducer
-  components/       # The OS shell (menu bar, dock, desktop)
-  apps/             # The actual programs (Finder, Terminal, etc.)
-```
+The goal was to keep this project completely dependency-free on the tooling side. React and ReactDOM are just pulled in via CDN as UMD scripts directly in the index.html file. Everything else is native JavaScript and vanilla CSS.
+For state management, the entire operating system relies on one massive useReducer inside src/state/reducer.js.
 
 ## Quirks & Limitations
 
