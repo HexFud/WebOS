@@ -6,7 +6,7 @@ This is my first OS programmed entirely by me! It runs entirely on the web and s
 
 ## How this was made
 
-For this project i used React 18 and native ES modules for all the JS files, so they are readable in the source code but in fact the get merged into one big file after you open the site
+For this project i used React 18 and native ES modules for all the JS files, so they are readable in the source code but in fact they get merged into one big file after you open the site
 
 ## How to run
 
