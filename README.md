@@ -1,44 +1,45 @@
-## WebOs
+## WebOS
 
-This is my first project regarding a WebOS, I built a macOS-inspired desktop environment that runs entirely in the browser. 
+This is my first OS programmed entirely by me! It runs entirely on the web and stores files, settings, notes, wallpapers, accounts and many others in the browser's local storage.
 
-![desktop](media/desktop.png) ![boot](media/boot.png)
+![desktop](media/desktop.png)
 
-## How to run it
+## How this was made
 
-Because the code uses native JavaScript modules (`import`/`export`), you cant just open index.html so you need to do one of the following things:
+For this project i used React 18 and native ES modules for all the JS files, so they are readable in the source code but in fact the get merged into one big file after you open the site
 
-If you have Python installed, open your terminal in the project folder and run:
+## How to run
 
-```bash
-python3 -m http.server 8000
+To run this locally you need to: 
+1. Clone the repository
+```sh
+git clone https://github.com/HexFud/WebOS.git
 ```
-Then just go to `http://localhost:8000` in your browser.
 
-On Windows sometimes Python won't start the server and you will get a blank screen If so stop the server and run `python3 serve.py`
+2. Go into the cloned folder 
+```sh
+cd WebOs
+```
+ 
+3. Start the server 
+```sh
+python3 serve.py
+```
 
-If you want just to see my WebOs you can just visit the GitHub pages site `https://hexfud.github.io/WebOS/`
+4. Visit the URL displayed in the terminal `http://localhost:8000` on your browser
 
-## What can it do?
+To run this on the go you can visit the online version of the [WebOS](https://hexfud.github.io/WebOS/) 
 
-*   **Window Management:** You can drag windows around, resize them from the edges, and snap them to the sides of the screen.
-*   **Finder & Files:** A working file explorer.
-*   **Text Editor:** You can actually write and save files. They are saved to your browser's `localStorage`, so they'll still be there when you refresh.
-*   **Web Browser:** Just a browser to load real sites. *(Note: lots of sites block iframes for security, so there's an "Open in new tab" fallback button).*
-*   **Terminal:** A basic shell. Type `help` to see what you can do. You can use the up/down arrows for command history.
-*   And many more!
+## Limitations of the OS 
 
-## HOW THIS WAS MADE
+- The integrated browser cannot access some sites like Google because of their security policies
 
-The goal was to keep this project completely dependency-free on the tooling side. React and ReactDOM are just pulled in via CDN as UMD scripts directly in the index.html file. Everything else is native JavaScript and vanilla CSS.
-For state management, the entire operating system relies on one massive useReducer inside src/state/reducer.js.
+- In some browsers the storage may not work because of the browser's privacy settings 
 
-## Quirks & Limitations
+## Note
 
-*   **Iframe blocking:** As mentioned above, sites like Google or GitHub will refuse to load inside the WebOS browser because of `X-Frame-Options` headers. There's no way to bypass this from the client side.
-*   **Battery icon:** The menu bar tries to use your device's actual Battery Status API. Firefox and Safari killed this API for privacy reasons. If you're using those browsers, the OS will just show a static, generic battery icon rather than making up a fake percentage. 
-*   **Storage:** If you use strict browser privacy settings that wipe your data on exit, your WebOS files, settings, and local account won't survive a browser restart.
+If you visit the WebOS site and after a commit it seems to be exactly as before you need to hit CTRL+SHIFT+R to clean the site cache
 
-## AI Declaration
+## AI declaration
 
-AI helped me to build the initial structure of the WebOs
+For this project i used almost no AI, it only helped me to build the initial structure of the OS
