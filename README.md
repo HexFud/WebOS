@@ -2,6 +2,8 @@
 
 This is my first project regarding a WebOS, I built a macOS-inspired desktop environment that runs entirely in the browser. 
 
+![desktop](media/desktop.png) ![boot](media/boot.png)
+
 ## How to run it
 
 Because the code uses native JavaScript modules (`import`/`export`), you cant just open index.html so you need to do one of the following things:
