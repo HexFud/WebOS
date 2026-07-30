@@ -1,4 +1,4 @@
-## WebOA
+## WebOs
 
 This is my first project regarding a WebOS, I built a macOS-inspired desktop environment that runs entirely in the browser. 
 
