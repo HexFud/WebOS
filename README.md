@@ -18,7 +18,7 @@ git clone https://github.com/HexFud/WebOS.git
 
 2. Go into the cloned folder 
 ```sh
-cd WebOs
+cd WebOS
 ```
  
 3. Start the server 
